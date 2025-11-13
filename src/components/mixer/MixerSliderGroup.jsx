@@ -1,101 +1,116 @@
 import React from 'react'
 
-// Icon components for slider groups
-const IconMusic = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-  </svg>
-)
+// Visualizer component - vertical bars
+const Visualizer = ({ value, max = 100, isGreen = false }) => {
+  const bars = 20
+  const barWidth = 2
+  const barGap = 1.5
+  const maxHeight = 16
 
-const IconWave = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-  </svg>
-)
+  return (
+    <div className="flex items-end gap-0.5 h-4" style={{ width: `${bars * (barWidth + barGap)}px` }}>
+      {Array.from({ length: bars }).map((_, i) => {
+        const barValue = Math.random() * value * 0.8 + value * 0.2
+        const height = (barValue / max) * maxHeight
+        const isActive = (i / bars) * 100 < value
+        return (
+          <div
+            key={i}
+            className={`transition-all duration-150 ${
+              isActive 
+                ? isGreen 
+                  ? 'bg-green-500' 
+                  : 'bg-white' 
+                : 'bg-white/20'
+            }`}
+            style={{
+              width: `${barWidth}px`,
+              height: `${Math.max(2, height)}px`,
+              minHeight: '2px',
+            }}
+          />
+        )
+      })}
+    </div>
+  )
+}
 
-const IconSound = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-  </svg>
-)
-
-const IconKeyboard = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
-  </svg>
-)
-
-const IconRain = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-  </svg>
-)
-
-const IconCafe = () => (
-  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-  </svg>
-)
-
-const iconMap = {
-  music: IconMusic,
-  wave: IconWave,
-  sound: IconSound,
-  keyboard: IconKeyboard,
-  rain: IconRain,
-  cafe: IconCafe,
+// Toggle switch component
+const ToggleSwitch = ({ checked, onChange }) => {
+  return (
+    <button
+      onClick={onChange}
+      className={`relative w-10 h-5 rounded-full transition-colors duration-200 ${
+        checked ? 'bg-green-500' : 'bg-white/20'
+      }`}
+      aria-label="Toggle"
+    >
+      <div
+        className={`absolute top-0.5 left-0.5 w-4 h-4 bg-white rounded-full transition-transform duration-200 ${
+          checked ? 'translate-x-5' : 'translate-x-0'
+        }`}
+      />
+    </button>
+  )
 }
 
 export default function MixerSliderGroup({ slider, value, onChange, onToggle }) {
-  const Icon = slider.icon ? iconMap[slider.icon] : null
   const isMuted = value === 0
+  const isVolume = slider.id === 'volume'
+  const isMusic = slider.id === 'music'
 
   return (
-    <div className="flex items-center gap-4">
-      {/* Left label */}
-      <div className="w-32 text-sm text-textPrimary-muted font-medium">
-        {slider.label}
+    <div className="space-y-1.5">
+      <div className="flex items-center justify-between">
+        <span className="text-xs text-textPrimary-muted font-medium">{slider.label}:</span>
+        {isVolume && <ToggleSwitch checked={!isMuted} onChange={onToggle} />}
       </div>
 
-      {/* Center slider - Lofizen style with dots */}
-      <div className="flex-1 relative">
-        <div className="relative h-2">
-          {/* Active fill bar */}
-          <div
-            className="absolute top-0 left-0 h-2 rounded-full bg-gradient-to-r from-primaryAccent to-primaryAccent-light pointer-events-none transition-all duration-200"
-            style={{ width: `${((value - slider.min) / (slider.max - slider.min)) * 100}%` }}
-          />
-          {/* Dotted background track */}
-          <div className="absolute top-0 left-0 right-0 h-2 rounded-full bg-surfaceDark opacity-50 pointer-events-none"
-               style={{
-                 backgroundImage: 'repeating-linear-gradient(to right, rgba(255, 255, 255, 0.15) 0px, rgba(255, 255, 255, 0.15) 2px, transparent 2px, transparent 6px)'
-               }} />
-          {/* Slider input */}
-          <input
-            type="range"
-            min={slider.min}
-            max={slider.max}
-            value={value}
-            onChange={(e) => onChange(parseInt(e.target.value))}
-            className="slider-dotted absolute top-0 left-0 right-0 w-full"
-          />
+      <div className="flex items-center gap-4">
+        {/* Visualizer bars */}
+        <div className="flex-1">
+          <Visualizer value={value} isGreen={isVolume} />
+        </div>
+
+        {/* Toggle or play button */}
+        <div className="flex items-center gap-2">
+          {isMusic ? (
+            <button
+              onClick={onToggle}
+              className="w-6 h-6 flex items-center justify-center text-textPrimary hover:text-white transition-colors"
+              aria-label="Play/Pause"
+            >
+              <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 24 24">
+                <path d="M8 5v14l11-7z" />
+              </svg>
+            </button>
+          ) : slider.id === 'rain' || slider.id === 'whiteNoise' ? (
+            <button
+              onClick={onToggle}
+              className="w-6 h-6 flex items-center justify-center text-textPrimary-muted hover:text-white transition-colors"
+              aria-label="Settings"
+            >
+              <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+              </svg>
+            </button>
+          ) : null}
         </div>
       </div>
 
-      {/* Right side - value and icon */}
-      <div className="flex items-center gap-2 w-20 justify-end">
-        <span className="text-xs text-textPrimary-dim font-mono tabular-nums w-8 text-right">
-          {value}%
-        </span>
-        {Icon && (
-          <button
-            onClick={onToggle}
-            className={`btn-icon w-8 h-8 ${isMuted ? 'opacity-50' : ''}`}
-            aria-label={`Toggle ${slider.label}`}
-          >
-            <Icon />
-          </button>
-        )}
+      {/* Hidden slider for actual control - positioned over visualizer */}
+      <div className="relative -mt-4" style={{ pointerEvents: 'auto' }}>
+        <input
+          type="range"
+          min={slider.min}
+          max={slider.max}
+          value={value}
+          onChange={(e) => onChange(parseInt(e.target.value))}
+          className="slider-matte w-full h-4"
+          style={{ pointerEvents: 'auto' }}
+          aria-label={slider.label}
+        />
       </div>
     </div>
   )

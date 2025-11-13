@@ -1,13 +1,13 @@
 import React, { useState } from 'react'
 import { mixerSliders, mixerModes } from '../../config/mixer'
 import MixerHeader from './MixerHeader'
-import MixerTabs from './MixerTabs'
 import MixerModeChips from './MixerModeChips'
 import MixerSliderGroup from './MixerSliderGroup'
+import { usePlayer } from '../player/PlayerContext'
 
-export default function MixerPanel() {
-  const [activeTab, setActiveTab] = useState('calmcove')
-  const [activeMode, setActiveMode] = useState('all')
+export default function MixerPanel({ onClose }) {
+  const [activeMode, setActiveMode] = useState('chill')
+  const { currentTrack } = usePlayer()
   const [sliderValues, setSliderValues] = useState(() => {
     const initial = {}
     mixerSliders.forEach((slider) => {
@@ -34,18 +34,25 @@ export default function MixerPanel() {
   }
 
   return (
-    <div className="glass-strong p-6 animate-fade-in max-h-[85vh] overflow-y-auto scrollbar-thin">
-      {/* Header - Lofizen style */}
-      <MixerHeader />
+    <div className="matte-panel w-full max-h-[50vh] overflow-y-auto no-scrollbar" style={{ pointerEvents: 'auto' }}>
+      {/* Header */}
+      <MixerHeader onClose={onClose} />
 
-      {/* Tabs */}
-      <MixerTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {/* Mode chips - Lofizen style */}
+      {/* Mode chips */}
       <MixerModeChips activeMode={activeMode} onModeChange={setActiveMode} />
 
-      {/* Slider groups - Lofizen style detailed controls */}
-      <div className="mt-6 space-y-4">
+      {/* Track info */}
+      <div className="mb-2 px-3">
+        <div className="text-[10px] text-textPrimary-muted mb-0.5">
+          <span className="tabular-nums">00:00</span> / <span className="tabular-nums">01:49</span>
+        </div>
+        <div className="text-xs font-medium text-textPrimary">{currentTrack?.title || 'Color Backdrop'}</div>
+        <div className="text-[10px] text-textPrimary-dim">{currentTrack?.artist || 'Premium Music Odyssey'}</div>
+      </div>
+
+      {/* Slider groups */}
+      <div className="space-y-2 px-3 pb-3">
         {mixerSliders.map((slider) => (
           <MixerSliderGroup
             key={slider.id}

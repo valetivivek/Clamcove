@@ -1,11 +1,30 @@
 import React, { useState, useEffect, useRef } from 'react'
+import DraggablePanel from '../ui/DraggablePanel'
+import { IconClose, IconReset } from '../icons/Icons'
+
+const TIMER_PRESETS = {
+  work: [
+    { label: '15 min', value: 15 },
+    { label: '25 min', value: 25 },
+    { label: '45 min', value: 45 },
+    { label: '60 min', value: 60 },
+  ],
+  break: [
+    { label: '5 min', value: 5 },
+    { label: '10 min', value: 10 },
+    { label: '15 min', value: 15 },
+    { label: '20 min', value: 20 },
+  ],
+}
 
 export default function PomodoroPanel({ isOpen, onClose }) {
   const [minutes, setMinutes] = useState(25)
   const [seconds, setSeconds] = useState(0)
   const [isRunning, setIsRunning] = useState(false)
   const [mode, setMode] = useState('work') // work or break
+  const [selectedPreset, setSelectedPreset] = useState(25)
   const intervalRef = useRef(null)
+  const dragHandleRef = useRef(null)
 
   useEffect(() => {
     if (isRunning) {
@@ -58,8 +77,18 @@ export default function PomodoroPanel({ isOpen, onClose }) {
   const handleModeChange = (newMode) => {
     setMode(newMode)
     setIsRunning(false)
-    setMinutes(newMode === 'work' ? 25 : 5)
+    const defaultTime = newMode === 'work' ? 25 : 5
+    setMinutes(defaultTime)
+    setSelectedPreset(defaultTime)
     setSeconds(0)
+  }
+
+  const handlePresetSelect = (presetMinutes) => {
+    if (!isRunning) {
+      setSelectedPreset(presetMinutes)
+      setMinutes(presetMinutes)
+      setSeconds(0)
+    }
   }
 
   const formatTime = (mins, secs) => {
@@ -76,64 +105,115 @@ export default function PomodoroPanel({ isOpen, onClose }) {
         onClick={onClose}
       />
 
-      {/* Panel - slides in from right */}
-      <div className="fixed right-6 top-1/2 -translate-y-1/2 z-50 w-80 animate-slide-in-right">
-        <div className="glass-strong p-6">
-          <div className="flex items-center justify-between mb-6">
-            <h3 className="text-lg font-medium text-textPrimary">Pomodoro</h3>
-            <button
-              onClick={onClose}
-              className="btn-icon w-8 h-8"
-              aria-label="Close"
+      {/* Panel - centered and draggable */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in">
+        <DraggablePanel dragHandleRef={dragHandleRef}>
+          <div className="glass-strong overflow-hidden">
+            {/* Drag handle - header area */}
+            <div 
+              ref={dragHandleRef}
+              className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-glass-border/50"
             >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Mode switcher */}
-          <div className="flex gap-2 mb-6">
-            <button
-              onClick={() => handleModeChange('work')}
-              className={`chip flex-1 ${mode === 'work' ? 'chip-active' : ''}`}
-            >
-              Work
-            </button>
-            <button
-              onClick={() => handleModeChange('break')}
-              className={`chip flex-1 ${mode === 'break' ? 'chip-active' : ''}`}
-            >
-              Break
-            </button>
-          </div>
-
-          {/* Timer display */}
-          <div className="text-center mb-6">
-            <div className="text-5xl font-light text-primaryAccent tabular-nums mb-2">
-              {formatTime(minutes, seconds)}
-            </div>
-            <div className="text-sm text-textPrimary-muted">
-              {mode === 'work' ? 'Focus time' : 'Take a break'}
-            </div>
-          </div>
-
-          {/* Controls */}
-          <div className="flex gap-2">
-            {!isRunning ? (
-              <button onClick={handleStart} className="btn-icon flex-1 bg-primaryAccent text-white hover:bg-primaryAccent-light">
-                Start
+              <div className="flex items-center gap-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-coolBlue/60"></div>
+                <h3 className="text-xl font-display font-semibold text-textPrimary tracking-tight">Pomodoro Timer</h3>
+              </div>
+              <button
+                onClick={onClose}
+                className="btn-icon w-8 h-8 rounded-lg opacity-70 hover:opacity-100"
+                aria-label="Close"
+              >
+                <IconClose />
               </button>
-            ) : (
-              <button onClick={handlePause} className="btn-icon flex-1">
-                Pause
-              </button>
-            )}
-            <button onClick={handleReset} className="btn-icon">
-              Reset
-            </button>
+            </div>
+
+            <div className="p-6">
+
+              {/* Mode switcher */}
+              <div className="flex gap-3 mb-6">
+                <button
+                  onClick={() => handleModeChange('work')}
+                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 ${
+                    mode === 'work' 
+                      ? 'chip-active shadow-glow' 
+                      : 'hover:bg-glass-medium'
+                  }`}
+                >
+                  Work
+                </button>
+                <button
+                  onClick={() => handleModeChange('break')}
+                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 ${
+                    mode === 'break' 
+                      ? 'chip-active shadow-glow' 
+                      : 'hover:bg-glass-medium'
+                  }`}
+                >
+                  Break
+                </button>
+              </div>
+
+              {/* Timer presets */}
+              <div className="mb-6">
+                <div className="text-xs font-medium text-textPrimary-muted mb-2 uppercase tracking-wider">
+                  Quick Start
+                </div>
+                <div className="grid grid-cols-4 gap-2">
+                  {TIMER_PRESETS[mode].map((preset) => (
+                    <button
+                      key={preset.value}
+                      onClick={() => handlePresetSelect(preset.value)}
+                      disabled={isRunning}
+                      className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                        selectedPreset === preset.value && !isRunning
+                          ? 'bg-coolBlue/80 text-white'
+                          : 'bg-glass-soft text-textPrimary-muted hover:bg-glass-medium hover:text-textPrimary'
+                      } ${isRunning ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                    >
+                      {preset.label}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              {/* Timer display - cool and prominent */}
+              <div className="text-center mb-8">
+                <div className="text-6xl font-light text-coolBlue tabular-nums mb-3 tracking-tight">
+                  {formatTime(minutes, seconds)}
+                </div>
+                <div className="text-sm font-medium text-textPrimary-muted uppercase tracking-wider">
+                  {mode === 'work' ? 'Focus time' : 'Take a break'}
+                </div>
+              </div>
+
+              {/* Controls */}
+              <div className="flex gap-3">
+                {!isRunning ? (
+                  <button 
+                    onClick={handleStart} 
+                    className="btn-primary flex-1 py-3 text-sm font-semibold rounded-xl shadow-medium hover:shadow-glow"
+                  >
+                    Start
+                  </button>
+                ) : (
+                  <button 
+                    onClick={handlePause} 
+                    className="btn-secondary flex-1 py-3 text-sm font-semibold rounded-xl"
+                  >
+                    Pause
+                  </button>
+                )}
+                <button 
+                  onClick={handleReset} 
+                  className="btn-icon w-12 h-12 rounded-xl"
+                  aria-label="Reset"
+                >
+                  <IconReset />
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
+        </DraggablePanel>
       </div>
     </>
   )

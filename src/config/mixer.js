@@ -8,7 +8,7 @@ export const mixerSliders = [
     min: 0,
     max: 100,
     defaultValue: 70,
-    icon: null, // No icon for main volume
+    icon: null,
   },
   {
     id: 'music',
@@ -23,7 +23,7 @@ export const mixerSliders = [
     label: 'Static Sounds',
     min: 0,
     max: 100,
-    defaultValue: 40,
+    defaultValue: 0,
     icon: 'wave',
   },
   {

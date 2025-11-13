@@ -1,79 +1,82 @@
 import React from 'react'
 import { usePlayer } from './PlayerContext'
+import {
+  IconPrevious,
+  IconNext,
+  IconPlay,
+  IconPause,
+  IconVolume,
+  IconMixer,
+  IconHeart,
+} from '../icons/Icons'
 
-export default function PlayerBar() {
+export default function PlayerBar({ onToggleMixer }) {
   const { currentTrack, isPlaying, togglePlayPause, nextTrack, previousTrack } = usePlayer()
 
   return (
-    <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-30 w-full max-w-4xl px-4">
-      <div className="glass flex items-center gap-4 p-4">
+    <div className="w-full">
+      <div className="glass glass-hover flex items-center gap-3 py-2 px-3 h-14">
         {/* Left cluster - Play controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5">
           <button
             onClick={previousTrack}
-            className="btn-icon"
+            className="btn-icon w-9 h-9"
             aria-label="Previous track"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
-            </svg>
+            <IconPrevious />
           </button>
 
           <button
             onClick={togglePlayPause}
-            className="btn-icon w-12 h-12 bg-primaryAccent text-white hover:bg-primaryAccent-light"
+            className="btn-icon w-10 h-10 bg-primaryAccent text-white hover:bg-primaryAccent-light"
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
-            {isPlaying ? (
-              <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z" />
-              </svg>
-            ) : (
-              <svg className="w-6 h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M8 5v14l11-7z" />
-              </svg>
-            )}
+            {isPlaying ? <IconPause className="w-5 h-5" /> : <IconPlay className="w-5 h-5 ml-0.5" />}
           </button>
 
           <button
             onClick={nextTrack}
-            className="btn-icon"
+            className="btn-icon w-9 h-9"
             aria-label="Next track"
           >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
-            </svg>
+            <IconNext />
           </button>
 
-          <button className="btn-icon" aria-label="Volume">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
-            </svg>
+          <button className="btn-icon w-9 h-9" aria-label="Volume">
+            <IconVolume />
           </button>
-
-          <button className="btn-icon" aria-label="Mixer">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3" />
-            </svg>
+          <button 
+            onClick={onToggleMixer}
+            className="btn-icon w-9 h-9" 
+            aria-label="Mixer"
+          >
+            <IconMixer className="w-4 h-4" />
           </button>
         </div>
 
-        {/* Center - Track info */}
-        <div className="flex-1 min-w-0 px-4">
-          <div className="text-sm font-medium text-textPrimary truncate">
-            {currentTrack?.title || 'No track selected'}
-          </div>
-          <div className="text-xs text-textPrimary-muted truncate">
-            {currentTrack?.artist || 'Select a track'}
+        {/* Center - Track info with album art */}
+        <div className="flex-1 min-w-0 px-3 flex items-center gap-2.5">
+          {currentTrack?.coverImageUrl && (
+            <img
+              src={currentTrack.coverImageUrl}
+              alt="Album cover"
+              className="w-9 h-9 rounded-lg shadow-medium object-cover"
+            />
+          )}
+          <div className="flex-1 min-w-0">
+            <div className="text-xs font-medium text-textPrimary truncate">
+              {currentTrack?.title || 'No track selected'}
+            </div>
+            <div className="text-[10px] text-textPrimary-muted truncate">
+              {currentTrack?.artist || 'Select a track'}
+            </div>
           </div>
         </div>
 
         {/* Right cluster - Favorites */}
-        <div className="flex items-center gap-2">
-          <button className="btn-icon" aria-label="Favorites">
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
+        <div className="flex items-center gap-1.5">
+          <button className="btn-icon w-9 h-9" aria-label="Favorites">
+            <IconHeart className="w-4 h-4" />
           </button>
         </div>
       </div>

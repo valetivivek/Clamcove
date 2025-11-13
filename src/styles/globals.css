@@ -1,5 +1,5 @@
-/* Import Inter font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+/* Import warm, friendly fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -9,7 +9,7 @@
   body {
     @apply font-sans antialiased;
     @apply text-textPrimary;
-    @apply bg-black;
+    @apply bg-darkCool;
     @apply overflow-hidden;
   }
   
@@ -20,97 +20,145 @@
   #root {
     @apply h-full w-full;
   }
+  
+  /* Cool gradient overlay for atmosphere - subtle */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background: radial-gradient(ellipse at center, rgba(100, 150, 200, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 5;
+  }
+  
+  /* Soft noise texture overlay */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 6;
+  }
 }
 
 @layer components {
-  /* Glassmorphism base */
+  /* Glassmorphism base - warm and cozy */
   .glass {
-    @apply bg-surfaceDark backdrop-blur-xl;
-    @apply border border-white/10;
+    @apply bg-glass-soft backdrop-blur-xl;
+    @apply border border-glass-border;
     @apply rounded-2xl;
-    @apply shadow-2xl;
+    @apply shadow-large;
+    @apply transition-all duration-300;
   }
   
   .glass-strong {
-    @apply bg-surfaceDarker backdrop-blur-2xl;
-    @apply border border-white/15;
+    @apply bg-glass-medium backdrop-blur-2xl;
+    @apply border border-glass-border;
+    @apply rounded-3xl;
+    @apply shadow-large;
+    @apply transition-all duration-300;
+  }
+
+  /* Matte finish panel - consistent transparent style */
+  .matte-panel {
+    @apply bg-glass-strong backdrop-blur-xl;
     @apply rounded-2xl;
-    @apply shadow-2xl;
+    @apply shadow-large;
+    @apply border border-glass-border;
+    @apply transition-all duration-300;
+    @apply overflow-hidden;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
   }
   
-  /* Button base */
+  .glass-hover {
+    @apply hover:bg-glass-medium hover:border-coolBlue/20;
+  }
+  
+  /* Button base - cool and modern */
   .btn-icon {
-    @apply w-10 h-10 rounded-xl;
+    @apply w-12 h-12 rounded-xl;
     @apply flex items-center justify-center;
-    @apply bg-surfaceDark border border-white/10;
+    @apply bg-glass-soft border border-glass-border;
     @apply text-textPrimary-muted;
-    @apply transition-all duration-200;
-    @apply hover:bg-surfaceDark-hover hover:text-textPrimary hover:scale-105;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:bg-glass-medium hover:text-textPrimary hover:scale-105 hover:border-coolBlue/25;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-primaryAccent focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
   }
   
   .btn-icon-active {
-    @apply bg-primaryAccent text-white;
-    @apply border-primaryAccent;
-    @apply shadow-lg shadow-primaryAccent-glow;
+    @apply bg-coolBlue/80 text-white;
+    @apply border-coolBlue/60;
+    @apply scale-105;
   }
   
   .btn-secondary {
-    @apply bg-surfaceDark border border-white/10;
+    @apply bg-glass-soft border border-glass-border;
     @apply text-textPrimary;
-    @apply transition-all duration-200;
-    @apply hover:bg-surfaceDark-hover hover:scale-105;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:bg-glass-medium hover:border-coolBlue/20 hover:scale-105;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-primaryAccent focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
   }
   
   .btn-primary {
-    @apply bg-primaryAccent text-white;
-    @apply border border-primaryAccent;
-    @apply transition-all duration-200;
-    @apply hover:bg-primaryAccent-light hover:scale-105;
+    @apply bg-coolBlue/90 text-white;
+    @apply border border-coolBlue/60;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:bg-coolBlue hover:scale-105;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-primaryAccent focus:ring-offset-2 focus:ring-offset-transparent;
-    @apply shadow-lg shadow-primaryAccent-glow;
+    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply font-medium;
   }
   
   .input-base {
-    @apply bg-surfaceDark border border-white/10;
-    @apply rounded-lg px-4 py-2;
+    @apply bg-glass-soft border border-glass-border;
+    @apply rounded-xl px-4 py-2.5;
     @apply text-textPrimary placeholder:text-textPrimary-dim;
-    @apply focus:outline-none focus:ring-2 focus:ring-primaryAccent focus:border-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/40 focus:border-coolBlue/40;
+    @apply focus:bg-glass-medium;
     @apply transition-all duration-200;
+    @apply text-sm;
   }
   
   /* Chip/Mode button */
   .chip {
     @apply px-4 py-1.5 rounded-full;
     @apply text-sm font-medium;
-    @apply bg-surfaceDark border border-white/10;
+    @apply bg-glass-soft border border-glass-border;
     @apply text-textPrimary-muted;
     @apply transition-all duration-200;
-    @apply hover:bg-surfaceDark-hover hover:text-textPrimary hover:scale-105;
+    @apply hover:bg-glass-medium hover:text-textPrimary hover:scale-105;
     @apply active:scale-95;
   }
   
   .chip-active {
-    @apply bg-primaryAccent text-white;
-    @apply border-primaryAccent;
-    @apply shadow-lg shadow-primaryAccent-glow;
+    @apply bg-coolBlue/80 text-white;
+    @apply border-coolBlue/60;
+    @apply font-medium;
   }
   
-  /* Custom slider with dots/ticks - Lofizen style */
+  /* Custom slider with dots/ticks - cool modern style */
   .slider-dotted {
     @apply appearance-none;
     @apply w-full h-2;
-    @apply bg-surfaceDark rounded-full;
+    @apply bg-darkCool-light rounded-full;
     @apply cursor-pointer;
     @apply relative;
     background-image: repeating-linear-gradient(
       to right,
-      rgba(255, 255, 255, 0.15) 0px,
-      rgba(255, 255, 255, 0.15) 2px,
+      rgba(100, 150, 200, 0.2) 0px,
+      rgba(100, 150, 200, 0.2) 2px,
       transparent 2px,
       transparent 6px
     );
@@ -119,56 +167,84 @@
   .slider-dotted::-webkit-slider-thumb {
     @apply appearance-none;
     @apply w-5 h-5 rounded-full;
-    @apply bg-primaryAccent;
+    @apply bg-coolBlue;
     @apply cursor-pointer;
-    @apply transition-all duration-200;
-    @apply hover:scale-125 hover:shadow-lg hover:shadow-primaryAccent-glow;
-    @apply border-2 border-white/30;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
+    @apply border-2 border-white/20;
     @apply relative;
     @apply z-10;
   }
   
   .slider-dotted::-moz-range-thumb {
     @apply w-5 h-5 rounded-full;
-    @apply bg-primaryAccent border-2 border-white/30;
+    @apply bg-coolBlue border-2 border-white/20;
     @apply cursor-pointer;
-    @apply transition-all duration-200;
-    @apply hover:scale-125;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
   }
   
   .slider-dotted::-webkit-slider-runnable-track {
     @apply h-2 rounded-full;
-    @apply bg-surfaceDark;
+    @apply bg-darkCool-light;
   }
   
   .slider-dotted::-moz-range-track {
     @apply h-2 rounded-full;
-    @apply bg-surfaceDark;
+    @apply bg-darkCool-light;
   }
   
-  /* Slider base for settings */
+  /* Slider base for settings - cool style */
   .slider-base {
     @apply appearance-none;
-    @apply bg-surfaceDark rounded-full;
-    @apply h-1.5;
+    @apply bg-darkCool-light rounded-full;
+    @apply h-2;
     @apply cursor-pointer;
-    @apply transition-all duration-200;
+    @apply transition-all duration-300;
   }
   
   .slider-base::-webkit-slider-thumb {
     @apply appearance-none;
-    @apply w-4 h-4 rounded-full;
-    @apply bg-primaryAccent;
+    @apply w-5 h-5 rounded-full;
+    @apply bg-coolBlue;
     @apply cursor-pointer;
-    @apply transition-all duration-200;
-    @apply hover:scale-125 hover:shadow-lg hover:shadow-primaryAccent-glow;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
+    @apply border-2 border-white/20;
   }
   
-  .slider-base::-moz-range-thumb {
-    @apply w-4 h-4 rounded-full;
-    @apply bg-primaryAccent border-0;
-    @apply cursor-pointer;
-    @apply transition-all duration-200;
-    @apply hover:scale-125;
-  }
-}
+      .slider-base::-moz-range-thumb {
+        @apply w-5 h-5 rounded-full;
+        @apply bg-coolBlue border-2 border-white/20;
+        @apply cursor-pointer;
+        @apply transition-all duration-200 ease-out;
+        @apply hover:scale-110;
+      }
+
+      /* Matte slider - hidden but functional */
+      .slider-matte {
+        @apply appearance-none;
+        @apply bg-transparent;
+        @apply h-4;
+        @apply cursor-pointer;
+        @apply opacity-0;
+        @apply relative;
+        @apply pointer-events-auto;
+        @apply z-10;
+      }
+
+      .slider-matte::-webkit-slider-thumb {
+        @apply appearance-none;
+        @apply w-4 h-4 rounded-full;
+        @apply bg-green-500;
+        @apply cursor-pointer;
+        @apply opacity-0;
+      }
+
+      .slider-matte::-moz-range-thumb {
+        @apply w-4 h-4 rounded-full;
+        @apply bg-green-500;
+        @apply cursor-pointer;
+        @apply opacity-0;
+      }
+    }
