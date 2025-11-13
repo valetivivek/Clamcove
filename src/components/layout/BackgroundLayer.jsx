@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function BackgroundLayer({ backgroundId }) {
   // Placeholder background - replace with your image/video
-  const backgroundUrl = `/src/assets/backgrounds/${backgroundId}.jpg`
+  const backgroundUrl = `/assets/images/backgrounds/${backgroundId}.jpg`
 
   return (
     <div className="fixed inset-0 z-0">

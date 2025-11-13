@@ -96,7 +96,7 @@ export default function TimerPanel({ isOpen, onClose }) {
         </div>
 
         <div className="text-center mb-6">
-          <div className="text-6xl font-bold text-accent tabular-nums mb-4">
+          <div className="text-6xl font-bold text-primaryAccent tabular-nums mb-4">
             {formatTime(minutes, seconds)}
           </div>
         </div>

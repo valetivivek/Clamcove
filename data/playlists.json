@@ -1,0 +1,83 @@
+{
+  "apiKey": null,
+  "playlists": {
+    "chill": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Chill Lofi Hip Hop",
+        "firstVideoId": "jfKfPfyJRdk",
+        "thumbnail": "https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Lofi Hip Hop Mix",
+        "firstVideoId": "5qap5aO4i9A",
+        "thumbnail": "https://i.ytimg.com/vi/5qap5aO4i9A/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Study Beats",
+        "firstVideoId": "DWcJFNfaw9c",
+        "thumbnail": "https://i.ytimg.com/vi/DWcJFNfaw9c/mqdefault.jpg"
+      }
+    ],
+    "jazzhop": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Jazz Hop Vibes",
+        "firstVideoId": "f02mOEt11OQ",
+        "thumbnail": "https://i.ytimg.com/vi/f02mOEt11OQ/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Jazz Lofi Mix",
+        "firstVideoId": "lP26UCnoH9s",
+        "thumbnail": "https://i.ytimg.com/vi/lP26UCnoH9s/mqdefault.jpg"
+      }
+    ],
+    "ambient": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Ambient Focus",
+        "firstVideoId": "u8WQOCqJ5mY",
+        "thumbnail": "https://i.ytimg.com/vi/u8WQOCqJ5mY/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Ambient Space",
+        "firstVideoId": "rUxyKA_-grg",
+        "thumbnail": "https://i.ytimg.com/vi/rUxyKA_-grg/mqdefault.jpg"
+      }
+    ],
+    "sleep": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Sleep Sounds",
+        "firstVideoId": "rUxyKA_-grg",
+        "thumbnail": "https://i.ytimg.com/vi/rUxyKA_-grg/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Deep Sleep",
+        "firstVideoId": "jfKfPfyJRdk",
+        "thumbnail": "https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg"
+      }
+    ],
+    "deep-focus": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Deep Focus",
+        "firstVideoId": "5qap5aO4i9A",
+        "thumbnail": "https://i.ytimg.com/vi/5qap5aO4i9A/mqdefault.jpg"
+      },
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Concentration Mix",
+        "firstVideoId": "DWcJFNfaw9c",
+        "thumbnail": "https://i.ytimg.com/vi/DWcJFNfaw9c/mqdefault.jpg"
+      }
+    ]
+  },
+  "_comment": "Replace playlist IDs and firstVideoId with actual YouTube playlist/video IDs. Add your YouTube Data API v3 key to 'apiKey' field (or leave null to use fallback mode)."
+}
+

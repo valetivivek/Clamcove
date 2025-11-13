@@ -1,5 +1,5 @@
 import React from 'react'
-import { backgrounds } from '../../config/backgrounds'
+import { backgrounds } from '../../config/backgrounds.js'
 
 export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
   const getImageSrc = (bg) => {

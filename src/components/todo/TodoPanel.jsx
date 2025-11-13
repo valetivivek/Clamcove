@@ -84,7 +84,7 @@ export default function TodoPanel({ isOpen, onClose }) {
               {todos.map((todo) => (
                 <div
                   key={todo.id}
-                  className={`flex items-center gap-3 p-3 rounded-lg bg-bgSoft-light hover:bg-bgSoft-hover transition-colors ${
+                  className={`flex items-center gap-3 p-3 rounded-lg bg-surfaceDark hover:bg-surfaceDark-hover transition-colors ${
                     todo.completed ? 'opacity-60' : ''
                   }`}
                 >
@@ -92,7 +92,7 @@ export default function TodoPanel({ isOpen, onClose }) {
                     type="checkbox"
                     checked={todo.completed}
                     onChange={() => toggleTodo(todo.id)}
-                    className="w-5 h-5 rounded border-white/20 bg-bgSoft-light text-accent focus:ring-2 focus:ring-accent"
+                    className="w-5 h-5 rounded border-white/20 bg-surfaceDark text-primaryAccent focus:ring-2 focus:ring-primaryAccent"
                   />
                   <span
                     className={`flex-1 text-sm ${
