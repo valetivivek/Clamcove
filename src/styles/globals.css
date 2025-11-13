@@ -1,0 +1,147 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Import Inter font */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply font-sans antialiased;
+    @apply text-textPrimary;
+    @apply bg-black;
+    @apply overflow-hidden;
+  }
+  
+  html {
+    @apply h-full w-full;
+  }
+  
+  #root {
+    @apply h-full w-full;
+  }
+}
+
+@layer components {
+  /* Glassmorphism base */
+  .glass {
+    @apply bg-surfaceDark backdrop-blur-xl;
+    @apply border border-white/10;
+    @apply rounded-2xl;
+    @apply shadow-2xl;
+  }
+  
+  .glass-strong {
+    @apply bg-surfaceDarker backdrop-blur-2xl;
+    @apply border border-white/15;
+    @apply rounded-2xl;
+    @apply shadow-2xl;
+  }
+  
+  /* Button base */
+  .btn-icon {
+    @apply w-10 h-10 rounded-xl;
+    @apply flex items-center justify-center;
+    @apply bg-surfaceDark border border-white/10;
+    @apply text-textPrimary-muted;
+    @apply transition-all duration-200;
+    @apply hover:bg-surfaceDark-hover hover:text-textPrimary hover:scale-105;
+    @apply active:scale-95;
+    @apply focus:outline-none focus:ring-2 focus:ring-primaryAccent focus:ring-offset-2 focus:ring-offset-transparent;
+  }
+  
+  .btn-icon-active {
+    @apply bg-primaryAccent text-white;
+    @apply border-primaryAccent;
+    @apply shadow-lg shadow-primaryAccent-glow;
+  }
+  
+  /* Chip/Mode button */
+  .chip {
+    @apply px-4 py-1.5 rounded-full;
+    @apply text-sm font-medium;
+    @apply bg-surfaceDark border border-white/10;
+    @apply text-textPrimary-muted;
+    @apply transition-all duration-200;
+    @apply hover:bg-surfaceDark-hover hover:text-textPrimary hover:scale-105;
+    @apply active:scale-95;
+  }
+  
+  .chip-active {
+    @apply bg-primaryAccent text-white;
+    @apply border-primaryAccent;
+    @apply shadow-lg shadow-primaryAccent-glow;
+  }
+  
+  /* Custom slider with dots/ticks - Lofizen style */
+  .slider-dotted {
+    @apply appearance-none;
+    @apply w-full h-2;
+    @apply bg-surfaceDark rounded-full;
+    @apply cursor-pointer;
+    @apply relative;
+    background-image: repeating-linear-gradient(
+      to right,
+      rgba(255, 255, 255, 0.15) 0px,
+      rgba(255, 255, 255, 0.15) 2px,
+      transparent 2px,
+      transparent 6px
+    );
+  }
+  
+  .slider-dotted::-webkit-slider-thumb {
+    @apply appearance-none;
+    @apply w-5 h-5 rounded-full;
+    @apply bg-primaryAccent;
+    @apply cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:scale-125 hover:shadow-lg hover:shadow-primaryAccent-glow;
+    @apply border-2 border-white/30;
+    @apply relative;
+    @apply z-10;
+  }
+  
+  .slider-dotted::-moz-range-thumb {
+    @apply w-5 h-5 rounded-full;
+    @apply bg-primaryAccent border-2 border-white/30;
+    @apply cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:scale-125;
+  }
+  
+  .slider-dotted::-webkit-slider-runnable-track {
+    @apply h-2 rounded-full;
+    @apply bg-surfaceDark;
+  }
+  
+  .slider-dotted::-moz-range-track {
+    @apply h-2 rounded-full;
+    @apply bg-surfaceDark;
+  }
+  
+  /* Slider base for settings */
+  .slider-base {
+    @apply appearance-none;
+    @apply bg-bgSoft-light rounded-full;
+    @apply h-1.5;
+    @apply cursor-pointer;
+    @apply transition-all duration-200;
+  }
+  
+  .slider-base::-webkit-slider-thumb {
+    @apply appearance-none;
+    @apply w-4 h-4 rounded-full;
+    @apply bg-primaryAccent;
+    @apply cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:scale-125 hover:shadow-lg hover:shadow-primaryAccent-glow;
+  }
+  
+  .slider-base::-moz-range-thumb {
+    @apply w-4 h-4 rounded-full;
+    @apply bg-primaryAccent border-0;
+    @apply cursor-pointer;
+    @apply transition-all duration-200;
+    @apply hover:scale-125;
+  }
+}

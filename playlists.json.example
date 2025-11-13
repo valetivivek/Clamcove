@@ -1,0 +1,19 @@
+{
+  "apiKey": null,
+  "playlists": {
+    "chill": [
+      {
+        "id": "PLFgquLnL59alCl_2TQvOiD5Vgm1hCaGSI",
+        "title": "Chill Lofi Hip Hop",
+        "firstVideoId": "jfKfPfyJRdk",
+        "thumbnail": "https://i.ytimg.com/vi/jfKfPfyJRdk/mqdefault.jpg"
+      }
+    ],
+    "jazzhop": [],
+    "ambient": [],
+    "sleep": [],
+    "deep-focus": []
+  },
+  "_comment": "Copy this file to data/playlists.json and add your API key and playlist IDs"
+}
+

@@ -1,0 +1,39 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Environment variables
+.env
+.env.local
+.env.production
+
+# API Keys (NEVER commit these)
+data/playlists.json
+# Uncomment the line above if you want to keep playlists.json private
+# Instead, use playlists.json.example and copy it
+
+# Build outputs
+dist/
+build/
+*.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Audio files (optional - uncomment if you don't want to commit audio)
+# assets/audio/*.mp3
+# assets/audio/*.ogg
+
+# Temporary files
+*.tmp
+.cache/
+
