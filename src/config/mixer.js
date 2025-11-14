@@ -4,34 +4,26 @@
 export const mixerSliders = [
   {
     id: 'volume',
-    label: 'Volume',
+    label: 'Master Volume',
     min: 0,
     max: 100,
     defaultValue: 70,
     icon: null,
   },
   {
-    id: 'music',
-    label: 'Music',
+    id: 'musicVolume',
+    label: 'Music Volume',
     min: 0,
     max: 100,
     defaultValue: 60,
-    icon: 'music',
-  },
-  {
-    id: 'static',
-    label: 'Static Sounds',
-    min: 0,
-    max: 100,
-    defaultValue: 0,
-    icon: 'wave',
+    icon: null,
   },
   {
     id: 'whiteNoise',
     label: 'White Noise',
     min: 0,
     max: 100,
-    defaultValue: 0,
+    defaultValue: 50,
     icon: 'sound',
   },
   {
@@ -39,23 +31,15 @@ export const mixerSliders = [
     label: 'Brown Noise',
     min: 0,
     max: 100,
-    defaultValue: 0,
+    defaultValue: 50,
     icon: 'sound',
-  },
-  {
-    id: 'keyboard',
-    label: 'Keyboard',
-    min: 0,
-    max: 100,
-    defaultValue: 0,
-    icon: 'keyboard',
   },
   {
     id: 'rain',
     label: 'Rain',
     min: 0,
     max: 100,
-    defaultValue: 0,
+    defaultValue: 50,
     icon: 'rain',
   },
   {
@@ -63,16 +47,24 @@ export const mixerSliders = [
     label: 'Café',
     min: 0,
     max: 100,
-    defaultValue: 0,
+    defaultValue: 50,
     icon: 'cafe',
+  },
+  {
+    id: 'keyboard',
+    label: 'Keyboard',
+    min: 0,
+    max: 100,
+    defaultValue: 50,
+    icon: 'keyboard',
   },
 ]
 
 // Mode chips for filtering/categorizing sounds
 export const mixerModes = [
-  { id: 'all', label: 'All' },
   { id: 'chill', label: 'Chill' },
   { id: 'energy', label: 'Energy' },
-  { id: 'jazzy', label: 'Jazzy' },
+  { id: 'focus', label: 'Focus' },
+  { id: 'all', label: 'All' },
 ]
 

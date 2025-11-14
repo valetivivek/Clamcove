@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Tooltip from '../ui/Tooltip'
 import { useIdle } from '../../hooks/useIdle'
+import { useSettings } from '../../contexts/SettingsContext'
 import {
   IconImage,
   IconFocus,
@@ -13,10 +14,9 @@ import {
 
 const sidebarActions = [
   { id: 'background', icon: 'image', label: 'Background' },
-  { id: 'focus', icon: 'focus', label: 'Focus Mode' },
+  { id: 'focus', icon: 'alarm', label: 'Focus Mode' },
   { id: 'pomodoro', icon: 'timer', label: 'Pomodoro' },
-  { id: 'alarm', icon: 'alarm', label: 'Alarm' },
-  { id: 'tasks', icon: 'checklist', label: 'Tasks' },
+  { id: 'tasks', icon: 'checklist', label: 'Tasks & Notes' },
   { id: 'settings', icon: 'settings', label: 'Settings' },
 ]
 
@@ -26,24 +26,31 @@ const iconMap = {
   timer: IconTimer,
   alarm: IconAlarm,
   checklist: IconChecklist,
-  focus: IconFocus,
+  focus: IconAlarm, // Use alarm icon for focus
 }
 
 export default function Sidebar({ activePanel, onAction, isFocusMode }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const isIdle = useIdle(300000)
+  const { settings } = useSettings()
+  
+  // Calculate top position based on settings (0-100% from top)
+  const topPosition = `${settings.sidebarPosition}%`
 
   return (
     <>
-      {/* Desktop Sidebar - icons only, no container */}
-      <div className={`fixed right-6 top-1/2 -translate-y-1/2 z-40 hidden md:block transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}>
+      {/* Desktop Sidebar - right side, icons only, no container */}
+      <div 
+        className={`fixed right-6 z-40 hidden md:block transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}
+        style={{ top: topPosition, transform: 'translateY(-50%)' }}
+      >
         <div className="flex flex-col gap-3">
             {sidebarActions.map((action) => {
               const Icon = iconMap[action.icon]
               const isActive = activePanel === action.id || (action.id === 'focus' && isFocusMode)
 
               return (
-                <Tooltip key={action.id} label={action.label}>
+                <Tooltip key={action.id} label={action.label} position="left">
                   <button
                     onClick={() => onAction(action.id)}
                     className={`btn-icon ${isActive ? 'btn-icon-active' : ''}`}
@@ -69,7 +76,7 @@ export default function Sidebar({ activePanel, onAction, isFocusMode }) {
 
         {/* Mobile menu - expands upward */}
         {isMobileOpen && (
-          <div className="absolute bottom-14 right-0 glass flex flex-col gap-2 p-2 animate-slide-up">
+          <div className="absolute bottom-14 right-0 panel flex flex-col gap-2 p-2 animate-slide-up">
             {sidebarActions.map((action) => {
               const Icon = iconMap[action.icon]
               const isActive = activePanel === action.id || (action.id === 'focus' && isFocusMode)

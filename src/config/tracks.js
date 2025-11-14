@@ -25,9 +25,9 @@ export const tracks = [
   },
   {
     id: 'track-4',
-    title: 'Jazz Lounge',
-    artist: 'Smooth Jazz',
+    title: 'Deep Focus',
+    artist: 'Concentration',
     fileUrl: '/assets/audio/track-four.mp3',
-    mode: 'jazzy',
+    mode: 'focus',
   },
 ]

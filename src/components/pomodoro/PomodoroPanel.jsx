@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react'
 import DraggablePanel from '../ui/DraggablePanel'
 import { IconClose, IconReset } from '../icons/Icons'
+import TimerWidget from './TimerWidget'
 
 const TIMER_PRESETS = {
   work: [
@@ -17,14 +18,30 @@ const TIMER_PRESETS = {
   ],
 }
 
-export default function PomodoroPanel({ isOpen, onClose }) {
-  const [minutes, setMinutes] = useState(25)
-  const [seconds, setSeconds] = useState(0)
-  const [isRunning, setIsRunning] = useState(false)
-  const [mode, setMode] = useState('work') // work or break
+export default function PomodoroPanel({ isOpen, onClose, onTimerStart, onTimerStop, timerState, onTimerUpdate }) {
+  const [minutes, setMinutes] = useState(timerState?.minutes || 25)
+  const [seconds, setSeconds] = useState(timerState?.seconds || 0)
+  const [isRunning, setIsRunning] = useState(timerState?.isRunning || false)
+  const [mode, setMode] = useState(timerState?.mode || 'work') // work or break
   const [selectedPreset, setSelectedPreset] = useState(25)
-  const intervalRef = useRef(null)
   const dragHandleRef = useRef(null)
+  const intervalRef = useRef(null)
+
+  // Sync with external timer state
+  useEffect(() => {
+    if (timerState) {
+      setMinutes(timerState.minutes)
+      setSeconds(timerState.seconds)
+      setIsRunning(timerState.isRunning)
+      setMode(timerState.mode)
+    } else {
+      // Initialize timer state when panel opens if no state exists
+      if (isOpen && !timerState) {
+        const defaultMins = mode === 'work' ? 25 : 5
+        if (onTimerUpdate) onTimerUpdate(defaultMins, 0, mode, false)
+      }
+    }
+  }, [timerState, isOpen, mode, onTimerUpdate])
 
   useEffect(() => {
     if (isRunning) {
@@ -35,10 +52,14 @@ export default function PomodoroPanel({ isOpen, onClose }) {
               handleComplete()
               return 0
             }
-            setMinutes((prevMins) => prevMins - 1)
+            const newMins = minutes - 1
+            setMinutes(newMins)
+            if (onTimerUpdate) onTimerUpdate(newMins, 59, mode, true)
             return 59
           }
-          return prev - 1
+          const newSecs = prev - 1
+          if (onTimerUpdate) onTimerUpdate(minutes, newSecs, mode, true)
+          return newSecs
         })
       }, 1000)
     } else {
@@ -52,26 +73,33 @@ export default function PomodoroPanel({ isOpen, onClose }) {
         clearInterval(intervalRef.current)
       }
     }
-  }, [isRunning, minutes])
+  }, [isRunning, minutes, seconds, mode, onTimerUpdate])
 
   const handleComplete = () => {
     setIsRunning(false)
-    // Subtle notification - could show in mixer panel
-    console.log('Timer complete!')
+    if (onTimerUpdate) onTimerUpdate(0, 0, mode, false)
+    if (onTimerStop) onTimerStop()
   }
 
   const handleStart = () => {
     setIsRunning(true)
+    if (onTimerStart) onTimerStart({ minutes, seconds, mode, isRunning: true })
   }
 
   const handlePause = () => {
     setIsRunning(false)
+    if (onTimerUpdate) onTimerUpdate(minutes, seconds, mode, false)
+    // Don't call onTimerStop here - keep the timer state so widget can still show
   }
 
   const handleReset = () => {
     setIsRunning(false)
-    setMinutes(mode === 'work' ? 25 : 5)
+    const defaultMins = mode === 'work' ? 25 : 5
+    setMinutes(defaultMins)
     setSeconds(0)
+    if (onTimerUpdate) onTimerUpdate(defaultMins, 0, mode, false)
+    // Optionally clear timer state on reset - user can decide
+    // if (onTimerStop) onTimerStop()
   }
 
   const handleModeChange = (newMode) => {
@@ -81,6 +109,7 @@ export default function PomodoroPanel({ isOpen, onClose }) {
     setMinutes(defaultTime)
     setSelectedPreset(defaultTime)
     setSeconds(0)
+    if (onTimerUpdate) onTimerUpdate(defaultTime, 0, newMode, false)
   }
 
   const handlePresetSelect = (presetMinutes) => {
@@ -88,6 +117,8 @@ export default function PomodoroPanel({ isOpen, onClose }) {
       setSelectedPreset(presetMinutes)
       setMinutes(presetMinutes)
       setSeconds(0)
+      // Update timer state so widget shows even when panel is closed
+      if (onTimerUpdate) onTimerUpdate(presetMinutes, 0, mode, false)
     }
   }
 
@@ -95,31 +126,29 @@ export default function PomodoroPanel({ isOpen, onClose }) {
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`
   }
 
+  // Only render panel if it's open
   if (!isOpen) return null
 
   return (
     <>
-      {/* Dim overlay */}
-      <div
-        className="fixed inset-0 z-40 bg-black/20 backdrop-blur-sm animate-fade-in"
-        onClick={onClose}
-      />
-
-      {/* Panel - centered and draggable */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in">
+      {/* Panel - centered and draggable, no overlay */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in" style={{ pointerEvents: 'none' }}>
         <DraggablePanel dragHandleRef={dragHandleRef}>
-          <div className="glass-strong overflow-hidden">
+          <div className="panel-strong overflow-hidden" style={{ pointerEvents: 'auto' }}>
             {/* Drag handle - header area */}
             <div 
               ref={dragHandleRef}
-              className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-glass-border/50"
+              className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-coolBlue/60"></div>
-                <h3 className="text-xl font-display font-semibold text-textPrimary tracking-tight">Pomodoro Timer</h3>
+                <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
+                <h3 className="text-xl font-sans font-semibold text-text-primary tracking-tight">Pomodoro Timer</h3>
               </div>
               <button
-                onClick={onClose}
+                onClick={() => {
+                  // Don't clear timer state when closing, just close the panel
+                  onClose()
+                }}
                 className="btn-icon w-8 h-8 rounded-lg opacity-70 hover:opacity-100"
                 aria-label="Close"
               >
@@ -133,20 +162,16 @@ export default function PomodoroPanel({ isOpen, onClose }) {
               <div className="flex gap-3 mb-6">
                 <button
                   onClick={() => handleModeChange('work')}
-                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 ${
-                    mode === 'work' 
-                      ? 'chip-active shadow-glow' 
-                      : 'hover:bg-glass-medium'
+                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 flex items-center justify-center ${
+                    mode === 'work' ? 'chip-active' : ''
                   }`}
                 >
                   Work
                 </button>
                 <button
                   onClick={() => handleModeChange('break')}
-                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 ${
-                    mode === 'break' 
-                      ? 'chip-active shadow-glow' 
-                      : 'hover:bg-glass-medium'
+                  className={`chip flex-1 py-2.5 text-sm font-medium transition-all duration-200 flex items-center justify-center ${
+                    mode === 'break' ? 'chip-active' : ''
                   }`}
                 >
                   Break
@@ -155,7 +180,7 @@ export default function PomodoroPanel({ isOpen, onClose }) {
 
               {/* Timer presets */}
               <div className="mb-6">
-                <div className="text-xs font-medium text-textPrimary-muted mb-2 uppercase tracking-wider">
+                <div className="text-xs font-medium text-text-secondary mb-2 uppercase tracking-wider">
                   Quick Start
                 </div>
                 <div className="grid grid-cols-4 gap-2">
@@ -164,10 +189,10 @@ export default function PomodoroPanel({ isOpen, onClose }) {
                       key={preset.value}
                       onClick={() => handlePresetSelect(preset.value)}
                       disabled={isRunning}
-                      className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 ${
+                      className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex items-center justify-center ${
                         selectedPreset === preset.value && !isRunning
-                          ? 'bg-coolBlue/80 text-white'
-                          : 'bg-glass-soft text-textPrimary-muted hover:bg-glass-medium hover:text-textPrimary'
+                          ? 'bg-accent-primary text-white'
+                          : 'bg-surface-secondary text-text-secondary hover:bg-surface-tertiary hover:text-text-primary'
                       } ${isRunning ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
                     >
                       {preset.label}
@@ -176,36 +201,36 @@ export default function PomodoroPanel({ isOpen, onClose }) {
                 </div>
               </div>
 
-              {/* Timer display - cool and prominent */}
+              {/* Timer display - zen aesthetic, prominent */}
               <div className="text-center mb-8">
-                <div className="text-6xl font-light text-coolBlue tabular-nums mb-3 tracking-tight">
+                <div className="text-6xl font-sans font-light text-accent-primary tabular-nums mb-3 tracking-tight">
                   {formatTime(minutes, seconds)}
                 </div>
-                <div className="text-sm font-medium text-textPrimary-muted uppercase tracking-wider">
+                <div className="text-sm font-medium text-text-secondary uppercase tracking-wider">
                   {mode === 'work' ? 'Focus time' : 'Take a break'}
                 </div>
               </div>
 
               {/* Controls */}
-              <div className="flex gap-3">
+              <div className="flex items-center justify-center gap-3">
                 {!isRunning ? (
                   <button 
                     onClick={handleStart} 
-                    className="btn-primary flex-1 py-3 text-sm font-semibold rounded-xl shadow-medium hover:shadow-glow"
+                    className="btn-primary flex-1 py-3 text-sm font-semibold rounded-xl flex items-center justify-center"
                   >
                     Start
                   </button>
                 ) : (
                   <button 
                     onClick={handlePause} 
-                    className="btn-secondary flex-1 py-3 text-sm font-semibold rounded-xl"
+                    className="btn-secondary flex-1 py-3 text-sm font-semibold rounded-xl flex items-center justify-center"
                   >
                     Pause
                   </button>
                 )}
                 <button 
                   onClick={handleReset} 
-                  className="btn-icon w-12 h-12 rounded-xl"
+                  className="btn-icon w-12 h-12 rounded-xl flex items-center justify-center"
                   aria-label="Reset"
                 >
                   <IconReset />

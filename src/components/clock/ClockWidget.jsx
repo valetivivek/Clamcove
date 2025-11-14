@@ -29,10 +29,10 @@ export default function ClockWidget() {
 
   return (
     <div className="flex flex-col items-end gap-1">
-      <div className="text-2xl font-light text-textPrimary tabular-nums">
+      <div className="text-2xl font-sans font-light text-text-primary tabular-nums">
         {formatTime(time)}
       </div>
-      <div className="text-xs text-textPrimary-dim">
+      <div className="text-xs text-text-tertiary">
         {formatDate(time)}
       </div>
     </div>

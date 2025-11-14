@@ -6,55 +6,68 @@ export default {
   ],
   theme: {
     extend: {
-      // CalmCove Cool Modern Color Palette
+      // CalmCove Japanese Zen - Cool Neutral Palette
       colors: {
-        // Primary cool accents - soft and calming
+        // Surface colors - deep charcoal grays with blue undertone
+        surface: {
+          primary: 'rgb(20, 25, 35)',      // Deepest, almost black
+          secondary: 'rgb(30, 38, 50)',    // Medium charcoal
+          tertiary: 'rgb(40, 50, 65)',     // Lighter charcoal for elevated content
+        },
+        // Accent colors - cool blue-gray (misty morning sky)
+        accent: {
+          primary: 'rgb(100, 150, 200)',   // Cool blue-gray
+          secondary: 'rgb(120, 180, 200)', // Soft teal-gray for interactive states
+        },
+        // Text colors - off-white with slight warm tint
+        text: {
+          primary: 'rgb(240, 245, 250)',   // Off-white
+          secondary: 'rgba(180, 190, 200, 0.7)', // 60% opacity
+          tertiary: 'rgba(120, 130, 140, 0.4)',  // 40% opacity
+        },
+        // Border color - very subtle
+        border: 'rgba(255, 255, 255, 0.1)',
+        // Status colors - muted and calm
+        success: 'rgb(140, 180, 160)',     // Soft sage green
+        warning: 'rgb(200, 180, 140)',     // Warm amber-gray
+        error: 'rgb(200, 160, 160)',       // Soft rose-gray
+        // Legacy support (keeping for gradual migration)
         coolBlue: {
           DEFAULT: 'rgb(100, 150, 200)',
           light: 'rgb(120, 170, 220)',
           dark: 'rgb(80, 130, 180)',
-          glow: 'rgba(100, 150, 200, 0.2)',
         },
-        softTeal: 'rgb(100, 200, 180)',
-        softPurple: 'rgb(150, 130, 200)',
-        softCyan: 'rgb(100, 200, 220)',
-        // Secondary cool tones
-        mintGreen: 'rgb(150, 220, 180)',
-        lavender: 'rgb(180, 160, 220)',
-        skyBlue: 'rgb(140, 180, 220)',
-        // Cool dark backgrounds
         darkCool: {
           DEFAULT: 'rgb(20, 25, 35)',
           light: 'rgb(30, 38, 50)',
           lighter: 'rgb(40, 50, 65)',
         },
-        // Glassmorphism surfaces - consistent transparent style
-        glass: {
-          soft: 'rgba(255, 255, 255, 0.05)',
-          medium: 'rgba(255, 255, 255, 0.08)',
-          strong: 'rgba(255, 255, 255, 0.12)',
-          border: 'rgba(255, 255, 255, 0.1)',
+        charcoal: {
+          DEFAULT: '#2a2a2a',
+          dark: '#1a1a1a',
+          light: '#3a3a3a',
         },
-        // Text colors
+        emerald: {
+          DEFAULT: '#10b981',
+          light: '#34d399',
+          dark: '#059669',
+        },
         textPrimary: {
           DEFAULT: 'rgb(240, 245, 250)',
           muted: 'rgba(240, 245, 250, 0.7)',
           dim: 'rgba(240, 245, 250, 0.4)',
         },
-        // Primary accent (replaces warmAmber)
         primaryAccent: {
           DEFAULT: 'rgb(100, 150, 200)',
           light: 'rgb(120, 170, 220)',
           dark: 'rgb(80, 130, 180)',
-          glow: 'rgba(100, 150, 200, 0.2)',
         },
-        surfaceDark: {
-          DEFAULT: 'rgba(30, 38, 50, 0.8)',
-          hover: 'rgba(40, 50, 65, 0.9)',
-        },
-        surfaceDarker: {
-          DEFAULT: 'rgba(20, 25, 35, 0.9)',
-          hover: 'rgba(30, 38, 50, 0.95)',
+        // Temporary: Glass colors for backward compatibility (will be removed)
+        glass: {
+          soft: 'rgba(30, 38, 50, 0.95)',
+          medium: 'rgba(40, 50, 65, 0.95)',
+          strong: 'rgba(40, 50, 65, 0.98)',
+          border: 'rgba(255, 255, 255, 0.1)',
         },
       },
       // Font families

@@ -15,8 +15,8 @@ export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
           onClick={() => onSelect(bg.id)}
           className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 ${
             currentBackgroundId === bg.id
-              ? 'border-accent ring-2 ring-accent/50 scale-105'
-              : 'border-white/10 hover:border-white/20 hover:scale-102'
+              ? 'border-accent-primary ring-2 ring-accent-primary/50 scale-105'
+              : 'border-border hover:border-accent-primary/30 hover:scale-102'
           }`}
           aria-label={`Select ${bg.name} background`}
         >

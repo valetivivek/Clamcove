@@ -26,6 +26,13 @@ export const backgrounds = [
     srcMedium: '/assets/images/backgrounds/city-night-medium.jpg',
     srcSmall: '/assets/images/backgrounds/city-night-small.jpg',
   },
+  {
+    id: 'cybercity',
+    name: 'Cyber City',
+    srcLarge: '/assets/images/backgrounds/Cybercity.jpg',
+    srcMedium: '/assets/images/backgrounds/Cybercity.jpg',
+    srcSmall: '/assets/images/backgrounds/Cybercity.jpg',
+  },
   // Add more scenes by copying the object above and updating the values
 ]
 

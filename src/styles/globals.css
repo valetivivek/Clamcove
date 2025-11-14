@@ -43,29 +43,29 @@
 }
 
 @layer components {
-  /* Glassmorphism base - warm and cozy */
-  .glass {
-    @apply bg-glass-soft backdrop-blur-xl;
-    @apply border border-glass-border;
+  /* Panel base - solid colors, no glassmorphism */
+  .panel {
+    @apply bg-surface-tertiary;
+    @apply border border-border;
     @apply rounded-2xl;
-    @apply shadow-large;
+    @apply shadow-medium;
     @apply transition-all duration-300;
   }
   
-  .glass-strong {
-    @apply bg-glass-medium backdrop-blur-2xl;
-    @apply border border-glass-border;
+  .panel-strong {
+    @apply bg-surface-tertiary;
+    @apply border border-border;
     @apply rounded-3xl;
     @apply shadow-large;
     @apply transition-all duration-300;
   }
 
-  /* Matte finish panel - consistent transparent style */
-  .matte-panel {
-    @apply bg-glass-strong backdrop-blur-xl;
-    @apply rounded-2xl;
-    @apply shadow-large;
-    @apply border border-glass-border;
+  /* Card - elevated content */
+  .card {
+    @apply bg-surface-secondary;
+    @apply border border-border;
+    @apply rounded-xl;
+    @apply shadow-soft;
     @apply transition-all duration-300;
     @apply overflow-hidden;
   }
@@ -80,124 +80,75 @@
     display: none;
   }
   
-  .glass-hover {
-    @apply hover:bg-glass-medium hover:border-coolBlue/20;
-  }
-  
-  /* Button base - cool and modern */
+  /* Button base - zen aesthetic, solid colors */
   .btn-icon {
     @apply w-12 h-12 rounded-xl;
     @apply flex items-center justify-center;
-    @apply bg-glass-soft border border-glass-border;
-    @apply text-textPrimary-muted;
+    @apply bg-surface-secondary border border-border;
+    @apply text-text-secondary;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-glass-medium hover:text-textPrimary hover:scale-105 hover:border-coolBlue/25;
+    @apply hover:bg-surface-tertiary hover:text-text-primary hover:scale-105 hover:border-accent-primary/30;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply leading-none;
   }
   
   .btn-icon-active {
-    @apply bg-coolBlue/80 text-white;
-    @apply border-coolBlue/60;
+    @apply bg-accent-primary text-white;
+    @apply border-accent-primary/60;
     @apply scale-105;
   }
   
   .btn-secondary {
-    @apply bg-glass-soft border border-glass-border;
-    @apply text-textPrimary;
+    @apply bg-surface-secondary border border-border;
+    @apply text-text-primary;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-glass-medium hover:border-coolBlue/20 hover:scale-105;
+    @apply hover:bg-surface-tertiary hover:border-accent-primary/30 hover:scale-105;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
   }
   
   .btn-primary {
-    @apply bg-coolBlue/90 text-white;
-    @apply border border-coolBlue/60;
+    @apply bg-accent-primary text-white;
+    @apply border border-accent-primary/60;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-coolBlue hover:scale-105;
+    @apply hover:bg-accent-primary/90 hover:scale-105;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/30 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
     @apply font-medium;
   }
   
   .input-base {
-    @apply bg-glass-soft border border-glass-border;
-    @apply rounded-xl px-4 py-2.5;
-    @apply text-textPrimary placeholder:text-textPrimary-dim;
-    @apply focus:outline-none focus:ring-2 focus:ring-coolBlue/40 focus:border-coolBlue/40;
-    @apply focus:bg-glass-medium;
+    @apply bg-surface-secondary border border-border;
+    @apply rounded-xl px-4 py-3;
+    @apply text-text-primary placeholder:text-text-tertiary;
+    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-accent-primary/50;
+    @apply focus:bg-surface-tertiary;
     @apply transition-all duration-200;
     @apply text-sm;
   }
   
   /* Chip/Mode button */
   .chip {
-    @apply px-4 py-1.5 rounded-full;
+    @apply px-4 py-2 rounded-full;
     @apply text-sm font-medium;
-    @apply bg-glass-soft border border-glass-border;
-    @apply text-textPrimary-muted;
+    @apply bg-surface-secondary border border-border;
+    @apply text-text-secondary;
     @apply transition-all duration-200;
-    @apply hover:bg-glass-medium hover:text-textPrimary hover:scale-105;
+    @apply hover:bg-surface-tertiary hover:text-text-primary hover:scale-105;
     @apply active:scale-95;
   }
   
   .chip-active {
-    @apply bg-coolBlue/80 text-white;
-    @apply border-coolBlue/60;
+    @apply bg-accent-primary text-white;
+    @apply border-accent-primary/60;
     @apply font-medium;
   }
   
-  /* Custom slider with dots/ticks - cool modern style */
-  .slider-dotted {
-    @apply appearance-none;
-    @apply w-full h-2;
-    @apply bg-darkCool-light rounded-full;
-    @apply cursor-pointer;
-    @apply relative;
-    background-image: repeating-linear-gradient(
-      to right,
-      rgba(100, 150, 200, 0.2) 0px,
-      rgba(100, 150, 200, 0.2) 2px,
-      transparent 2px,
-      transparent 6px
-    );
-  }
-  
-  .slider-dotted::-webkit-slider-thumb {
-    @apply appearance-none;
-    @apply w-5 h-5 rounded-full;
-    @apply bg-coolBlue;
-    @apply cursor-pointer;
-    @apply transition-all duration-200 ease-out;
-    @apply hover:scale-110;
-    @apply border-2 border-white/20;
-    @apply relative;
-    @apply z-10;
-  }
-  
-  .slider-dotted::-moz-range-thumb {
-    @apply w-5 h-5 rounded-full;
-    @apply bg-coolBlue border-2 border-white/20;
-    @apply cursor-pointer;
-    @apply transition-all duration-200 ease-out;
-    @apply hover:scale-110;
-  }
-  
-  .slider-dotted::-webkit-slider-runnable-track {
-    @apply h-2 rounded-full;
-    @apply bg-darkCool-light;
-  }
-  
-  .slider-dotted::-moz-range-track {
-    @apply h-2 rounded-full;
-    @apply bg-darkCool-light;
-  }
-  
-  /* Slider base for settings - cool style */
+  /* Slider base for settings - zen style */
   .slider-base {
     @apply appearance-none;
-    @apply bg-darkCool-light rounded-full;
+    @apply bg-surface-secondary rounded-full;
     @apply h-2;
     @apply cursor-pointer;
     @apply transition-all duration-300;
@@ -206,20 +157,96 @@
   .slider-base::-webkit-slider-thumb {
     @apply appearance-none;
     @apply w-5 h-5 rounded-full;
-    @apply bg-coolBlue;
+    @apply bg-accent-primary;
     @apply cursor-pointer;
     @apply transition-all duration-200 ease-out;
     @apply hover:scale-110;
-    @apply border-2 border-white/20;
+    @apply border-2 border-border;
   }
   
-      .slider-base::-moz-range-thumb {
-        @apply w-5 h-5 rounded-full;
-        @apply bg-coolBlue border-2 border-white/20;
-        @apply cursor-pointer;
-        @apply transition-all duration-200 ease-out;
-        @apply hover:scale-110;
-      }
+  .slider-base::-moz-range-thumb {
+    @apply w-5 h-5 rounded-full;
+    @apply bg-accent-primary border-2 border-border;
+    @apply cursor-pointer;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
+  }
+
+  /* Enhanced volume slider */
+  .slider-volume {
+    @apply appearance-none;
+    @apply bg-transparent rounded-full;
+    @apply h-3;
+    @apply cursor-pointer;
+    @apply transition-all duration-300;
+    @apply relative z-10;
+  }
+  
+  .slider-volume::-webkit-slider-thumb {
+    @apply appearance-none;
+    @apply w-6 h-6 rounded-full;
+    @apply bg-accent-primary;
+    @apply cursor-pointer;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-125;
+    @apply border-2 border-white;
+    @apply shadow-lg;
+  }
+  
+  .slider-volume::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.8), 0 0 10px rgba(96, 165, 250, 0.6);
+  }
+  
+  .slider-volume::-moz-range-thumb {
+    @apply w-6 h-6 rounded-full;
+    @apply bg-accent-primary border-2 border-white;
+    @apply cursor-pointer;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-125;
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.6);
+  }
+  
+  .slider-volume::-moz-range-thumb:hover {
+    box-shadow: 0 0 20px rgba(96, 165, 250, 0.8), 0 0 10px rgba(96, 165, 250, 0.6);
+  }
+
+  /* Compact volume slider */
+  .slider-volume-compact {
+    @apply appearance-none;
+    @apply bg-transparent rounded-full;
+    @apply h-2.5;
+    @apply cursor-pointer;
+    @apply transition-all duration-300;
+    @apply relative z-10;
+  }
+  
+  .slider-volume-compact::-webkit-slider-thumb {
+    @apply appearance-none;
+    @apply w-5 h-5 rounded-full;
+    @apply bg-accent-primary;
+    @apply cursor-pointer;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
+    @apply border-2 border-white;
+    @apply shadow-lg;
+  }
+  
+  .slider-volume-compact::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.7), 0 0 8px rgba(96, 165, 250, 0.5);
+  }
+  
+  .slider-volume-compact::-moz-range-thumb {
+    @apply w-5 h-5 rounded-full;
+    @apply bg-accent-primary border-2 border-white;
+    @apply cursor-pointer;
+    @apply transition-all duration-200 ease-out;
+    @apply hover:scale-110;
+    box-shadow: 0 0 12px rgba(96, 165, 250, 0.6);
+  }
+  
+  .slider-volume-compact::-moz-range-thumb:hover {
+    box-shadow: 0 0 15px rgba(96, 165, 250, 0.7), 0 0 8px rgba(96, 165, 250, 0.5);
+  }
 
       /* Matte slider - hidden but functional */
       .slider-matte {
@@ -246,5 +273,39 @@
         @apply bg-green-500;
         @apply cursor-pointer;
         @apply opacity-0;
+      }
+
+      /* Custom slider for mixer */
+      .slider-custom {
+        @apply appearance-none;
+        @apply cursor-pointer;
+      }
+
+      .slider-custom::-webkit-slider-thumb {
+        @apply appearance-none;
+        @apply w-5 h-5 rounded-full;
+        @apply bg-white;
+        @apply cursor-pointer;
+        @apply border-2 border-emerald-500;
+        @apply shadow-lg;
+        @apply transition-all duration-200;
+        @apply hover:scale-110;
+      }
+
+      .slider-custom::-moz-range-thumb {
+        @apply w-5 h-5 rounded-full;
+        @apply bg-white border-2 border-emerald-500;
+        @apply cursor-pointer;
+        @apply shadow-lg;
+        @apply transition-all duration-200;
+        @apply hover:scale-110;
+      }
+
+      .slider-custom::-webkit-slider-runnable-track {
+        @apply h-2 rounded-full;
+      }
+
+      .slider-custom::-moz-range-track {
+        @apply h-2 rounded-full;
       }
     }
