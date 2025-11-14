@@ -9,12 +9,33 @@ export default defineConfig({
     minify: 'esbuild',
     rollupOptions: {
       output: {
-        manualChunks: {
-          'react-vendor': ['react', 'react-dom'],
+        manualChunks: (id) => {
+          // React vendor chunk
+          if (id.includes('node_modules/react') || id.includes('node_modules/react-dom')) {
+            return 'react-vendor'
+          }
+          // Mixer components (heavy audio logic)
+          if (id.includes('mixer')) {
+            return 'mixer'
+          }
+          // Player components
+          if (id.includes('player')) {
+            return 'player'
+          }
+          // Large components
+          if (id.includes('PomodoroPanel') || id.includes('TasksNotesPanel')) {
+            return 'panels'
+          }
         },
       },
     },
+    // Optimize chunk size
+    chunkSizeWarningLimit: 1000,
   },
   publicDir: 'public',
+  // Optimize dependencies
+  optimizeDeps: {
+    include: ['react', 'react-dom'],
+  },
 })
 

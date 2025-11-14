@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://clamcove.vercel.app/sitemap.xml
+

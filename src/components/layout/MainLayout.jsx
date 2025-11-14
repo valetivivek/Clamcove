@@ -1,25 +1,38 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import BackgroundLayer from './BackgroundLayer'
 import OverlayLayer from './OverlayLayer'
 import Sidebar from '../sidebar/Sidebar'
 import PlayerBar from '../player/PlayerBar'
-import MixerPanel from '../mixer/MixerPanel'
-import PomodoroPanel from '../pomodoro/PomodoroPanel'
+// Dynamic imports for code splitting
+const MixerPanel = React.lazy(() => import('../mixer/MixerPanel'))
+const PomodoroPanel = React.lazy(() => import('../pomodoro/PomodoroPanel'))
+const TasksNotesPanel = React.lazy(() => import('../tasks/TasksNotesPanel'))
+const BackgroundPanel = React.lazy(() => import('../background/BackgroundPanel'))
+const SettingsPanel = React.lazy(() => import('../settings/SettingsPanel'))
+
 import TimerWidget from '../pomodoro/TimerWidget'
-import TasksNotesPanel from '../tasks/TasksNotesPanel'
-import BackgroundPanel from '../background/BackgroundPanel'
-import SettingsPanel from '../settings/SettingsPanel'
-import ClockWidget from '../clock/ClockWidget'
 import CenterClock from '../clock/CenterClock'
+import OnboardingFlow from '../onboarding/OnboardingFlow'
 import { useIdle } from '../../hooks/useIdle'
-import { IconUser } from '../icons/Icons'
+import { useSettings } from '../../contexts/SettingsContext'
 
 export default function MainLayout() {
   const [activePanel, setActivePanel] = useState(null)
   const [currentBackground, setCurrentBackground] = useState('cybercity')
   const [isFocusMode, setIsFocusMode] = useState(false)
   const [timerState, setTimerState] = useState(null) // { minutes, seconds, mode }
-  const isIdle = useIdle(300000)
+  const { settings } = useSettings()
+  const isIdle = useIdle(settings.idleTimeout || 300000)
+
+  // Expose startFocusSession for SSG CTA
+  useEffect(() => {
+    window.startFocusSession = () => {
+      setActivePanel('pomodoro')
+    }
+    return () => {
+      delete window.startFocusSession
+    }
+  }, [])
 
   const handleSidebarAction = (action) => {
     if (action === 'focus') {
@@ -41,6 +54,12 @@ export default function MainLayout() {
 
   return (
     <div className="relative w-full h-full overflow-hidden">
+      {/* Onboarding Flow */}
+      <OnboardingFlow 
+        onComplete={() => {}} 
+        onStartFocus={() => setActivePanel('pomodoro')}
+      />
+
       {/* Background Layer */}
       <BackgroundLayer backgroundId={currentBackground} />
 
@@ -50,9 +69,16 @@ export default function MainLayout() {
       {/* Center Clock Widget */}
       <CenterClock />
 
-      {/* Top left - Branding and Timer Widget */}
-      <div className={`absolute top-6 left-6 z-50 transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'} flex flex-col gap-3`}>
-        {timerState && (
+      {/* Top left - Branding */}
+      <div className={`absolute top-6 left-6 z-50 transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}>
+        <h1 className="text-2xl font-sans font-light text-text-primary tracking-wide">
+          Calm<span className="text-accent-primary">Cove</span>
+        </h1>
+      </div>
+
+      {/* Top right - Pomodoro Timer (only when active) */}
+      {timerState && (
+        <div className={`absolute top-6 right-6 z-50 transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}>
           <TimerWidget 
             minutes={timerState.minutes}
             seconds={timerState.seconds}
@@ -60,26 +86,8 @@ export default function MainLayout() {
             isRunning={timerState.isRunning}
             onClick={() => setActivePanel('pomodoro')}
           />
-        )}
-        <div>
-          <h1 className="text-2xl font-sans font-light text-text-primary tracking-wide">
-            Calm<span className="text-accent-primary">Cove</span>
-          </h1>
-          <p className="text-xs text-text-tertiary mt-1">Your cozy corner for focus</p>
         </div>
-      </div>
-
-      {/* Top right - Clock and Account */}
-      <div className={`absolute top-6 right-24 z-50 flex items-center gap-4 transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}>
-        <ClockWidget />
-        <button
-          className="btn-icon"
-          aria-label="Account"
-          onClick={() => setActivePanel(activePanel === 'account' ? null : 'account')}
-        >
-          <IconUser />
-        </button>
-      </div>
+      )}
 
       {/* Right Sidebar - Zen style */}
       <Sidebar activePanel={activePanel} onAction={handleSidebarAction} isFocusMode={isFocusMode} />
@@ -91,35 +99,48 @@ export default function MainLayout() {
         </div>
       </div>
 
-      {/* Mixer Panel - centered, draggable, resizable */}
-      <MixerPanel isOpen={activePanel === 'mixer'} onClose={() => setActivePanel(null)} />
+      {/* Lazy-loaded panels with Suspense */}
+      <React.Suspense fallback={null}>
+        {/* Mixer Panel - centered, draggable, resizable */}
+        {activePanel === 'mixer' && (
+          <MixerPanel isOpen={true} onClose={() => setActivePanel(null)} />
+        )}
 
-      {/* Pomodoro Panel - slides in from right */}
-      <PomodoroPanel 
-        isOpen={activePanel === 'pomodoro'} 
-        onClose={() => setActivePanel(null)}
-        onTimerStart={setTimerState}
-        onTimerStop={() => setTimerState(null)}
-        timerState={timerState}
-        onTimerUpdate={(mins, secs, mode, isRunning) => setTimerState({ minutes: mins, seconds: secs, mode, isRunning })}
-      />
+        {/* Pomodoro Panel - slides in from right */}
+        {activePanel === 'pomodoro' && (
+          <PomodoroPanel 
+            isOpen={true} 
+            onClose={() => setActivePanel(null)}
+            onTimerStart={setTimerState}
+            onTimerStop={() => setTimerState(null)}
+            timerState={timerState}
+            onTimerUpdate={(mins, secs, mode, isRunning) => setTimerState({ minutes: mins, seconds: secs, mode, isRunning })}
+          />
+        )}
 
-      {/* Tasks & Notes Panel */}
-      <TasksNotesPanel isOpen={activePanel === 'tasks'} onClose={() => setActivePanel(null)} />
+        {/* Tasks & Notes Panel */}
+        {activePanel === 'tasks' && (
+          <TasksNotesPanel isOpen={true} onClose={() => setActivePanel(null)} />
+        )}
 
-      {/* Background Panel */}
-      <BackgroundPanel
-        isOpen={activePanel === 'background'}
-        onClose={() => setActivePanel(null)}
-        currentBackgroundId={currentBackground}
-        onBackgroundChange={setCurrentBackground}
-      />
+        {/* Background Panel */}
+        {activePanel === 'background' && (
+          <BackgroundPanel
+            isOpen={true}
+            onClose={() => setActivePanel(null)}
+            currentBackgroundId={currentBackground}
+            onBackgroundChange={setCurrentBackground}
+          />
+        )}
 
-      {/* Settings Panel */}
-      <SettingsPanel
-        isOpen={activePanel === 'settings'}
-        onClose={() => setActivePanel(null)}
-      />
+        {/* Settings Panel */}
+        {activePanel === 'settings' && (
+          <SettingsPanel
+            isOpen={true}
+            onClose={() => setActivePanel(null)}
+          />
+        )}
+      </React.Suspense>
     </div>
   )
 }

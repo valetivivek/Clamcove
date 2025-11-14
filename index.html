@@ -4,10 +4,144 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CalmCove - Cozy Focus Space</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>CalmCove - Your Zen Corner for Deep Focus & Productivity</title>
+    <meta name="title" content="CalmCove - Your Zen Corner for Deep Focus & Productivity" />
+    <meta name="description" content="A zen-inspired focus space with lofi music, ambient sounds, pomodoro timer, and productivity tools. Create your perfect environment for deep work and mindfulness." />
+    <meta name="keywords" content="focus, productivity, lofi music, pomodoro timer, ambient sounds, zen, meditation, deep work, concentration, study music" />
+    <meta name="author" content="CalmCove" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://clamcove.vercel.app/" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://clamcove.vercel.app/" />
+    <meta property="og:title" content="CalmCove - Your Zen Corner for Deep Focus & Productivity" />
+    <meta property="og:description" content="A zen-inspired focus space with lofi music, ambient sounds, pomodoro timer, and productivity tools." />
+    <meta property="og:image" content="https://clamcove.vercel.app/og-image.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:site_name" content="CalmCove" />
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:url" content="https://clamcove.vercel.app/" />
+    <meta name="twitter:title" content="CalmCove - Your Zen Corner for Deep Focus & Productivity" />
+    <meta name="twitter:description" content="A zen-inspired focus space with lofi music, ambient sounds, pomodoro timer, and productivity tools." />
+    <meta name="twitter:image" content="https://clamcove.vercel.app/og-image.jpg" />
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Nunito:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    
+    <!-- Critical CSS Inline -->
+    <style>
+      /* Critical above-the-fold styles */
+      *{margin:0;padding:0;box-sizing:border-box}
+      html,body{height:100%;width:100%}
+      body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#141923;color:#F0F5FA;overflow:hidden;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+      #root{height:100%;width:100%}
+      /* Skip link for accessibility */
+      .skip-link{position:absolute;top:-40px;left:0;background:#6496C8;color:#fff;padding:8px 16px;text-decoration:none;z-index:9999}
+      .skip-link:focus{top:0}
+      /* Loading state */
+      #app-loading{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#141923;z-index:10000}
+      #app-loading h1{font-size:2rem;font-weight:300;color:#F0F5FA;margin-bottom:0.5rem}
+      #app-loading h1 span{color:#6496C8}
+      #app-loading p{font-size:0.875rem;color:rgba(200,210,220,0.7);margin-bottom:2rem}
+      @media (prefers-reduced-motion: reduce){*{animation-duration:0.01ms!important;animation-iteration-count:1!important;transition-duration:0.01ms!important}}
+    </style>
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "CalmCove",
+      "description": "A zen-inspired focus space with lofi music, ambient sounds, pomodoro timer, and productivity tools",
+      "url": "https://clamcove.vercel.app/",
+      "applicationCategory": "ProductivityApplication",
+      "operatingSystem": "Web",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "featureList": [
+        "Lofi music player",
+        "Ambient sound mixer",
+        "Pomodoro timer",
+        "Task management",
+        "Notes",
+        "Focus mode",
+        "Customizable backgrounds"
+      ]
+    }
+    </script>
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "CalmCove",
+      "url": "https://clamcove.vercel.app/",
+      "logo": "https://clamcove.vercel.app/favicon.svg",
+      "sameAs": []
+    }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <!-- Skip to main content link -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
+    
+    <!-- SSG Content - Visible before React hydration -->
+    <div id="app-loading">
+      <h1>Calm<span>Cove</span></h1>
+      <p>Your cozy corner for focus</p>
+      <noscript>
+        <p style="color:rgba(200,160,160,0.8);margin-top:1rem">JavaScript is required to use this application.</p>
+      </noscript>
+    </div>
+    
+    <!-- React App Root -->
+    <div id="root" role="main" aria-label="Main application content">
+      <!-- SSG Fallback Content (hidden after hydration) -->
+      <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center;z-index:1">
+        <h1 style="font-size:3rem;font-weight:300;color:#F0F5FA;margin-bottom:1rem">
+          Calm<span style="color:#6496C8">Cove</span>
+        </h1>
+        <p style="font-size:1.125rem;color:rgba(200,210,220,0.85);margin-bottom:2rem">
+          Your zen corner for deep focus and productivity
+        </p>
+        <button 
+          id="start-focus-ssg" 
+          style="background:#6496C8;color:#fff;border:none;padding:12px 32px;border-radius:12px;font-size:1rem;font-weight:500;cursor:pointer;transition:background 0.2s"
+          onmouseover="this.style.background='#78B4C8'"
+          onmouseout="this.style.background='#6496C8'"
+        >
+          Start a Focus Session
+        </button>
+      </div>
+    </div>
+    
     <script type="module" src="/src/main.jsx"></script>
+    <script>
+      // Hide SSG content after React hydration
+      window.addEventListener('load', function() {
+        setTimeout(function() {
+          const loading = document.getElementById('app-loading');
+          if (loading) loading.style.display = 'none';
+        }, 100);
+      });
+      
+      // Handle SSG CTA click
+      document.getElementById('start-focus-ssg')?.addEventListener('click', function() {
+        // This will be handled by React after hydration
+        if (window.startFocusSession) {
+          window.startFocusSession();
+        }
+      });
+    </script>
   </body>
 </html>

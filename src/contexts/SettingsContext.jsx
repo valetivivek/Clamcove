@@ -43,6 +43,7 @@ export function useSettings() {
 function getDefaultSettings() {
   return {
     sidebarPosition: 50, // 0-100, percentage from top
+    idleTimeout: 300000, // 5 minutes in milliseconds
     clock: {
       enabled: true,
       size: 'medium', // small, medium, large
