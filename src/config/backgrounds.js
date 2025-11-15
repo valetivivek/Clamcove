@@ -4,6 +4,8 @@
 
 export const backgrounds = [
   // Live Wallpapers (Videos)
+  // Note: Video files are excluded from git due to size (~419MB total)
+  // Place video files in public/assets/images/backgrounds/ to use them
   {
     id: 'autumn-bedroom',
     name: 'Autumn Bedroom',
