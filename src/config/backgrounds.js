@@ -1,39 +1,44 @@
 // Background scenes configuration for CalmCove
-// Add your 4K background images here
+// Supports both static images and live wallpapers (videos)
 // Use multiple resolutions for optimal performance on different devices
 
 export const backgrounds = [
+  // Live Wallpapers (Videos)
   {
-    id: 'bedroom-day',
-    name: 'Sunlit Bedroom',
-    // Replace these paths with your actual image files
-    // Place images in: src/assets/images/backgrounds/
-    srcLarge: '/assets/images/backgrounds/bedroom-day-large.jpg',   // 4K (3840x2160)
-    srcMedium: '/assets/images/backgrounds/bedroom-day-medium.jpg', // HD (1920x1080)
-    srcSmall: '/assets/images/backgrounds/bedroom-day-small.jpg',   // Tablet (1024x768)
+    id: 'autumn-bedroom',
+    name: 'Autumn Bedroom',
+    type: 'video',
+    src: '/assets/images/backgrounds/autumn-bedroom-moewalls-com.mp4',
+    description: 'Cozy autumn bedroom scene',
   },
   {
-    id: 'cafe-courtyard',
-    name: 'Cozy Café',
-    srcLarge: '/assets/images/backgrounds/cafe-courtyard-large.jpg',
-    srcMedium: '/assets/images/backgrounds/cafe-courtyard-medium.jpg',
-    srcSmall: '/assets/images/backgrounds/cafe-courtyard-small.jpg',
+    id: 'convenience-store-rain',
+    name: 'Convenience Store in Rain',
+    type: 'video',
+    src: '/assets/images/backgrounds/convenience-store-in-the-rain-moewalls-com.mp4',
+    description: 'Rainy night at convenience store',
   },
   {
-    id: 'city-night',
-    name: 'City Night',
-    srcLarge: '/assets/images/backgrounds/city-night-large.jpg',
-    srcMedium: '/assets/images/backgrounds/city-night-medium.jpg',
-    srcSmall: '/assets/images/backgrounds/city-night-small.jpg',
+    id: 'flower-shop-beachside',
+    name: 'Flower Shop Beachside',
+    type: 'video',
+    src: '/assets/images/backgrounds/flower-shop-beachside-moewalls-com.mp4',
+    description: 'Beachside flower shop',
   },
   {
-    id: 'cybercity',
-    name: 'Cyber City',
-    srcLarge: '/assets/images/backgrounds/Cybercity.jpg',
-    srcMedium: '/assets/images/backgrounds/Cybercity.jpg',
-    srcSmall: '/assets/images/backgrounds/Cybercity.jpg',
+    id: 'night-city-pixel',
+    name: 'Night City Pixel',
+    type: 'video',
+    src: '/assets/images/backgrounds/night-city-pixel-moewalls-com.mp4',
+    description: 'Pixel art city at night',
   },
-  // Add more scenes by copying the object above and updating the values
+  {
+    id: 'temple-gate-autumn',
+    name: 'Temple Gate Autumn',
+    type: 'video',
+    src: '/assets/images/backgrounds/temple-gate-amidst-autumn-mountains-moewalls-com.mp4',
+    description: 'Temple gate in autumn mountains',
+  },
 ]
 
 // Instructions for adding backgrounds:

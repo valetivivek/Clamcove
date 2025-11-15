@@ -18,7 +18,7 @@ import { useSettings } from '../../contexts/SettingsContext'
 
 export default function MainLayout() {
   const [activePanel, setActivePanel] = useState(null)
-  const [currentBackground, setCurrentBackground] = useState('cybercity')
+  const [currentBackground, setCurrentBackground] = useState('autumn-bedroom')
   const [isFocusMode, setIsFocusMode] = useState(false)
   const [timerState, setTimerState] = useState(null) // { minutes, seconds, mode }
   const { settings } = useSettings()

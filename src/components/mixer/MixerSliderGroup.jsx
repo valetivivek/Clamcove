@@ -30,10 +30,10 @@ const Visualizer = ({ value, max = 100, isPlaying }) => {
           : 0
         const height = Math.max(2, baseHeight + variation)
         
-        // Color gradient based on position
-        const hue = 200 + (i / bars) * 30 // Blue to cyan gradient
+        // Color gradient based on position - neutral gray
+        const lightness = 40 + (i / bars) * 20 // Gray gradient
         const color = isActive 
-          ? `hsl(${hue}, 70%, 60%)`
+          ? `hsl(0, 0%, ${lightness}%)`
           : 'rgba(255, 255, 255, 0.1)'
         
         return (

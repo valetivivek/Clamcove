@@ -6,18 +6,18 @@ export default {
   ],
   theme: {
     extend: {
-      // CalmCove Japanese Zen - Cool Neutral Palette
+      // CalmCove Japanese Zen - Plain Neutral Palette
       colors: {
-        // Surface colors - deep charcoal grays with blue undertone
+        // Surface colors - pure neutral grays
         surface: {
-          primary: 'rgb(20, 25, 35)',      // Deepest, almost black
-          secondary: 'rgb(30, 38, 50)',    // Medium charcoal
-          tertiary: 'rgb(40, 50, 65)',     // Lighter charcoal for elevated content
+          primary: 'rgb(20, 20, 20)',      // Deepest, almost black
+          secondary: 'rgb(30, 30, 30)',    // Medium charcoal
+          tertiary: 'rgb(40, 40, 40)',     // Lighter charcoal for elevated content
         },
-        // Accent colors - cool blue-gray (misty morning sky)
+        // Accent colors - neutral gray
         accent: {
-          primary: 'rgb(100, 150, 200)',   // Cool blue-gray
-          secondary: 'rgb(120, 180, 200)', // Soft teal-gray for interactive states
+          primary: 'rgb(120, 120, 120)',   // Neutral gray
+          secondary: 'rgb(140, 140, 140)', // Lighter gray for interactive states
         },
         // Text colors - WCAG AA compliant (4.5:1+ contrast)
         text: {
@@ -33,14 +33,14 @@ export default {
         error: 'rgb(200, 160, 160)',       // Soft rose-gray
         // Legacy support (keeping for gradual migration)
         coolBlue: {
-          DEFAULT: 'rgb(100, 150, 200)',
-          light: 'rgb(120, 170, 220)',
-          dark: 'rgb(80, 130, 180)',
+          DEFAULT: 'rgb(120, 120, 120)',
+          light: 'rgb(140, 140, 140)',
+          dark: 'rgb(100, 100, 100)',
         },
         darkCool: {
-          DEFAULT: 'rgb(20, 25, 35)',
-          light: 'rgb(30, 38, 50)',
-          lighter: 'rgb(40, 50, 65)',
+          DEFAULT: 'rgb(20, 20, 20)',
+          light: 'rgb(30, 30, 30)',
+          lighter: 'rgb(40, 40, 40)',
         },
         charcoal: {
           DEFAULT: '#2a2a2a',
@@ -58,15 +58,15 @@ export default {
           dim: 'rgba(240, 245, 250, 0.4)',
         },
         primaryAccent: {
-          DEFAULT: 'rgb(100, 150, 200)',
-          light: 'rgb(120, 170, 220)',
-          dark: 'rgb(80, 130, 180)',
+          DEFAULT: 'rgb(120, 120, 120)',
+          light: 'rgb(140, 140, 140)',
+          dark: 'rgb(100, 100, 100)',
         },
         // Temporary: Glass colors for backward compatibility (will be removed)
         glass: {
-          soft: 'rgba(30, 38, 50, 0.95)',
-          medium: 'rgba(40, 50, 65, 0.95)',
-          strong: 'rgba(40, 50, 65, 0.98)',
+          soft: 'rgba(30, 30, 30, 0.95)',
+          medium: 'rgba(40, 40, 40, 0.95)',
+          strong: 'rgba(40, 40, 40, 0.98)',
           border: 'rgba(255, 255, 255, 0.1)',
         },
       },
@@ -90,8 +90,8 @@ export default {
         'soft': '0 2px 8px rgba(0, 0, 0, 0.15)',
         'medium': '0 4px 16px rgba(0, 0, 0, 0.2)',
         'large': '0 8px 32px rgba(0, 0, 0, 0.25)',
-        'glow': '0 0 15px rgba(100, 150, 200, 0.15)',
-        'glow-lg': '0 0 25px rgba(100, 150, 200, 0.2)',
+        'glow': '0 0 15px rgba(120, 120, 120, 0.15)',
+        'glow-lg': '0 0 25px rgba(120, 120, 120, 0.2)',
         'inner-soft': 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
       },
       // Custom animations - smooth and warm
@@ -116,8 +116,8 @@ export default {
           '100%': { opacity: '0' },
         },
         glowPulse: {
-          '0%': { boxShadow: '0 0 10px rgba(100, 150, 200, 0.1)' },
-          '100%': { boxShadow: '0 0 20px rgba(100, 150, 200, 0.15)' },
+          '0%': { boxShadow: '0 0 10px rgba(120, 120, 120, 0.1)' },
+          '100%': { boxShadow: '0 0 20px rgba(120, 120, 120, 0.15)' },
         },
         scaleIn: {
           '0%': { transform: 'scale(0.95)', opacity: '0' },

@@ -388,13 +388,11 @@ const Visualizer = ({ value, max = 100, isVolume = false }) => {
           : 0
         const height = Math.max(3, baseHeight + variation)
         
-        // Color gradient based on position and value
+        // Color gradient based on position and value - neutral gray
         const intensity = value / max
-        const hue = 210 + (i / bars) * 20 // Blue to cyan gradient
-        const saturation = 60 + intensity * 40
-        const lightness = 50 + intensity * 20
+        const lightness = 40 + intensity * 30 // Gray gradient based on volume
         const color = isActive 
-          ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
+          ? `hsl(0, 0%, ${lightness}%)`
           : 'rgba(255, 255, 255, 0.1)'
         
         return (

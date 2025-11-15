@@ -3,35 +3,74 @@ import { backgrounds } from '../../config/backgrounds.js'
 
 export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
   const getImageSrc = (bg) => {
-    if (window.innerWidth >= 1280) return bg.srcMedium
-    return bg.srcSmall
+    if (bg.type === 'video') {
+      return bg.poster || bg.src
+    }
+    if (window.innerWidth >= 1280) return bg.srcMedium || bg.srcLarge
+    return bg.srcSmall || bg.srcMedium
   }
 
   return (
     <div className="grid grid-cols-2 gap-3">
-      {backgrounds.map((bg) => (
-        <button
-          key={bg.id}
-          onClick={() => onSelect(bg.id)}
-          className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 ${
-            currentBackgroundId === bg.id
-              ? 'border-accent-primary ring-2 ring-accent-primary/50 scale-105'
-              : 'border-border hover:border-accent-primary/30 hover:scale-102'
-          }`}
-          aria-label={`Select ${bg.name} background`}
-        >
-          <img
-            src={getImageSrc(bg)}
-            alt={bg.name}
-            className="w-full h-full object-cover"
-            loading="lazy"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          <div className="absolute bottom-2 left-2 right-2 text-sm font-medium text-white">
-            {bg.name}
-          </div>
-        </button>
-      ))}
+      {backgrounds.map((bg) => {
+        const isVideo = bg.type === 'video'
+        const isSelected = currentBackgroundId === bg.id
+        
+        return (
+          <button
+            key={bg.id}
+            onClick={() => onSelect(bg.id)}
+            className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 group ${
+              isSelected
+                ? 'border-accent-primary ring-2 ring-accent-primary/50 scale-105'
+                : 'border-border hover:border-accent-primary/30 hover:scale-102'
+            }`}
+            aria-label={`Select ${bg.name} background`}
+          >
+            {/* Thumbnail/Poster */}
+            <img
+              src={getImageSrc(bg)}
+              alt={bg.name}
+              className="w-full h-full object-cover"
+              loading="lazy"
+            />
+            
+            {/* Video indicator badge */}
+            {isVideo && (
+              <div className="absolute top-2 right-2 px-2 py-1 bg-black/60 backdrop-blur-sm rounded-md flex items-center gap-1.5">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z" />
+                </svg>
+                <span className="text-xs font-medium text-white">Live</span>
+              </div>
+            )}
+            
+            {/* Gradient overlay */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+            
+            {/* Name and description */}
+            <div className="absolute bottom-2 left-2 right-2">
+              <div className="text-sm font-medium text-white mb-0.5">
+                {bg.name}
+              </div>
+              {bg.description && (
+                <div className="text-xs text-white/70">
+                  {bg.description}
+                </div>
+              )}
+            </div>
+            
+            {/* Selected indicator */}
+            {isSelected && (
+              <div className="absolute top-2 left-2 w-5 h-5 rounded-full bg-accent-primary flex items-center justify-center">
+                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                </svg>
+              </div>
+            )}
+          </button>
+        )
+      })}
     </div>
   )
 }
