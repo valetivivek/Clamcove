@@ -36,26 +36,30 @@ const modeIcons = {
 export default function MixerModeChips({ activeMode, onModeChange }) {
   return (
     <div className="flex gap-2 justify-center">
-      <div className="bg-surface-secondary rounded-lg p-1 flex gap-1">
-        {mixerModes.map((mode) => {
-          const Icon = modeIcons[mode.id]
-          const isActive = activeMode === mode.id
-          return (
-            <button
-              key={mode.id}
-              onClick={() => onModeChange(mode.id)}
-              className={`px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
-                isActive
-                  ? 'bg-surface-tertiary text-accent-primary'
-                  : 'text-text-secondary hover:text-text-primary hover:bg-surface-tertiary/50'
-              }`}
-            >
-              {Icon && <Icon className={isActive ? 'text-accent-primary' : 'text-text-secondary'} />}
-              <span>{mode.label}</span>
-            </button>
-          )
-        })}
-      </div>
+      {mixerModes.map((mode) => {
+        const Icon = modeIcons[mode.id]
+        const isActive = activeMode === mode.id
+        return (
+          <button
+            key={mode.id}
+            onClick={() => onModeChange(mode.id)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center gap-2 ${
+              isActive
+                ? 'bg-surface-tertiary'
+                : 'bg-surface-secondary text-text-secondary hover:text-text-primary hover:bg-surface-tertiary/50'
+            }`}
+            style={isActive ? { color: 'var(--theme-color)' } : {}}
+          >
+            {Icon && (
+              <Icon 
+                style={isActive ? { color: 'var(--theme-color)' } : {}} 
+                className={!isActive ? 'text-text-secondary' : ''}
+              />
+            )}
+            <span>{mode.label}</span>
+          </button>
+        )
+      })}
     </div>
   )
 }

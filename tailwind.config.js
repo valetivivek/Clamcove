@@ -14,12 +14,12 @@ export default {
           secondary: 'rgb(26, 26, 30)',    // Medium dark
           tertiary: 'rgb(34, 34, 40)',      // Elevated content
         },
-        // Accent colors - teal/green matching lofizen
-        accent: {
-          primary: 'rgb(34, 197, 94)',    // Teal green - main accent (from lofizen images)
-          secondary: 'rgb(74, 222, 128)',  // Lighter teal for hover
-          dark: 'rgb(22, 163, 74)',       // Darker teal for accents
-        },
+          // Accent colors - teal/green matching lofizen (uses CSS variables for dynamic theming)
+          accent: {
+            primary: 'var(--theme-color)',    // Main accent color - dynamically updated
+            secondary: 'var(--theme-color-light)',  // Lighter variant for hover
+            dark: 'var(--theme-color-dark)',       // Darker variant for accents
+          },
         // Text colors - clean white
         text: {
           primary: 'rgb(255, 255, 255)',           // Pure white
@@ -63,13 +63,13 @@ export default {
           light: 'rgb(74, 222, 128)',       // Light teal
           dark: 'rgb(22, 163, 74)',        // Dark teal
         },
-        // Glass colors - lofizen style glassmorphism
-        glass: {
-          soft: 'rgba(26, 26, 30, 0.8)',      // Translucent dark
-          medium: 'rgba(26, 26, 30, 0.9)',   // Medium translucent
-          strong: 'rgba(18, 18, 20, 0.95)',      // Strong dark panel
-          border: 'rgba(34, 197, 94, 0.3)',     // Teal border glow
-        },
+          // Glass colors - lofizen style glassmorphism
+          glass: {
+            soft: 'rgba(26, 26, 30, 0.8)',      // Translucent dark
+            medium: 'rgba(26, 26, 30, 0.9)',   // Medium translucent
+            strong: 'rgba(18, 18, 20, 0.95)',      // Strong dark panel
+            border: 'rgba(34, 197, 94, 0.3)',     // Theme color border glow (will be overridden by CSS variable)
+          },
       },
       // Font families
       fontFamily: {

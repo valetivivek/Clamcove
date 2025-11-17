@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { usePlayer } from './PlayerContext'
+import { useSettings } from '../../contexts/SettingsContext'
 import {
   IconPrevious,
   IconNext,
@@ -14,6 +15,7 @@ import {
 
 export default function PlayerBar({ onToggleMixer, onToggleTimer, onToggleTasks, onToggleNotes }) {
   const { currentTrack, isPlaying, togglePlayPause, nextTrack, previousTrack } = usePlayer()
+  const { settings } = useSettings()
   const [currentTime, setCurrentTime] = useState(new Date())
   const [isFavorite, setIsFavorite] = useState(false)
 
@@ -55,7 +57,10 @@ export default function PlayerBar({ onToggleMixer, onToggleTimer, onToggleTasks,
 
           <button
             onClick={togglePlayPause}
-            className="btn-icon w-12 h-12 bg-accent-primary text-white hover:bg-accent-secondary flex items-center justify-center"
+            className="btn-icon w-12 h-12 text-white hover:opacity-90 flex items-center justify-center transition-all duration-200"
+            style={{
+              backgroundColor: 'var(--theme-color)',
+            }}
             aria-label={isPlaying ? 'Pause' : 'Play'}
           >
             {isPlaying ? <IconPause className="w-5 h-5" /> : <IconPlay className="w-5 h-5 ml-0.5" />}

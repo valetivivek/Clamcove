@@ -64,7 +64,10 @@ export default function Sidebar({ activePanel, onAction }) {
       <div className="fixed right-4 bottom-20 z-40 md:hidden">
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="btn-icon bg-accent-primary text-white hover:bg-accent-secondary"
+          className="btn-icon text-white hover:opacity-90 transition-all duration-200"
+          style={{
+            backgroundColor: 'var(--theme-color)',
+          }}
           aria-label="Menu"
         >
           <IconMenu />

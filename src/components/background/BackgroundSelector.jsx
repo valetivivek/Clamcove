@@ -34,11 +34,27 @@ export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
             onClick={() => onSelect(bg.id)}
             onMouseEnter={() => setHoveredId(bg.id)}
             onMouseLeave={() => setHoveredId(null)}
-            className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 group ${
-              isSelected
-                ? 'border-accent-primary ring-2 ring-accent-primary/50 scale-105'
-                : 'border-border hover:border-accent-primary/30 hover:scale-102'
-            }`}
+                    className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 group ${
+                      isSelected
+                        ? 'ring-2 scale-105'
+                        : 'border-border hover:scale-102'
+                    }`}
+                    style={isSelected ? {
+                      borderColor: 'var(--theme-color)',
+                      boxShadow: '0 0 0 2px var(--theme-color-50, rgba(34, 197, 94, 0.5))',
+                    } : {
+                      borderColor: 'rgba(255, 255, 255, 0.1)',
+                    }}
+                    onMouseEnter={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = 'var(--theme-color-30, rgba(34, 197, 94, 0.3))'
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (!isSelected) {
+                        e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)'
+                      }
+                    }}
             aria-label={`Select ${bg.name} background`}
           >
             {/* Video Preview */}
@@ -86,9 +102,12 @@ export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
               )}
             </div>
             
-            {/* Selected indicator */}
-            {isSelected && (
-              <div className="absolute top-2 left-2 w-5 h-5 rounded-full bg-accent-primary flex items-center justify-center">
+                    {/* Selected indicator */}
+                    {isSelected && (
+                      <div 
+                        className="absolute top-2 left-2 w-5 h-5 rounded-full flex items-center justify-center"
+                        style={{ backgroundColor: 'var(--theme-color)' }}
+                      >
                 <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                   <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                 </svg>

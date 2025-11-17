@@ -2,8 +2,15 @@ import React, { useState, useEffect, useRef } from 'react'
 import DraggablePanel from '../ui/DraggablePanel'
 import { IconClose, IconAdd, IconDelete, IconNotes, IconChecklist } from '../icons/Icons'
 
-export default function TasksNotesPanel({ isOpen, onClose }) {
-  const [activeTab, setActiveTab] = useState('tasks') // 'tasks' or 'notes'
+export default function TasksNotesPanel({ isOpen, onClose, initialTab = 'tasks' }) {
+  const [activeTab, setActiveTab] = useState(initialTab) // 'tasks' or 'notes'
+  
+  // Update activeTab when initialTab prop changes
+  useEffect(() => {
+    if (initialTab) {
+      setActiveTab(initialTab)
+    }
+  }, [initialTab])
   const [tasks, setTasks] = useState(() => {
     const saved = localStorage.getItem('calmcove-tasks')
     return saved ? JSON.parse(saved) : []
@@ -130,7 +137,10 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
               className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
+                <div 
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: 'var(--theme-color-60, rgba(34, 197, 94, 0.6))' }}
+                ></div>
                 <h3 className="text-xl font-sans font-semibold text-text-primary tracking-tight">
                   {activeTab === 'tasks' ? 'Tasks' : 'Notes'}
                 </h3>
@@ -189,9 +199,10 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
                 onClick={() => setActiveTab('tasks')}
                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                   activeTab === 'tasks'
-                    ? 'bg-accent-primary text-white'
+                    ? 'text-white'
                     : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
                 }`}
+                style={activeTab === 'tasks' ? { backgroundColor: 'var(--theme-color)' } : {}}
               >
                 <IconChecklist className="w-4 h-4" />
                 Tasks
@@ -207,9 +218,10 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
                 onClick={() => setActiveTab('notes')}
                 className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all duration-200 ${
                   activeTab === 'notes'
-                    ? 'bg-accent-primary text-white'
+                    ? 'text-white'
                     : 'text-text-secondary hover:text-text-primary hover:bg-surface-secondary'
                 }`}
+                style={activeTab === 'notes' ? { backgroundColor: 'var(--theme-color)' } : {}}
               >
                 <IconNotes className="w-4 h-4" />
                 Notes
@@ -255,13 +267,23 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
                             {tasks.filter(t => !t.completed).map((task) => (
                               <div
                                 key={task.id}
-                                className="group flex items-center gap-3 p-4 rounded-xl card hover:bg-surface-tertiary hover:border-accent-primary/30 transition-all duration-200"
+                                className="group flex items-center gap-3 p-4 rounded-xl card hover:bg-surface-tertiary transition-all duration-200"
+                                style={{}}
+                                onMouseEnter={(e) => {
+                                  e.currentTarget.style.borderColor = 'var(--theme-color-30, rgba(34, 197, 94, 0.3))'
+                                }}
+                                onMouseLeave={(e) => {
+                                  e.currentTarget.style.borderColor = 'var(--theme-color-border, rgba(34, 197, 94, 0.3))'
+                                }}
                               >
                                 <input
                                   type="checkbox"
                                   checked={task.completed}
                                   onChange={() => toggleTask(task.id)}
-                                  className="w-5 h-5 rounded-md border-border bg-surface-tertiary text-accent-primary focus:ring-2 focus:ring-accent-primary/50 cursor-pointer transition-all flex-shrink-0"
+                                  className="w-5 h-5 rounded-md border-border bg-surface-tertiary cursor-pointer transition-all flex-shrink-0"
+                                  style={{
+                                    accentColor: 'var(--theme-color)',
+                                  }}
                                 />
                                 {editingTaskId === task.id ? (
                                   <input
@@ -310,7 +332,10 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
                                     type="checkbox"
                                     checked={task.completed}
                                     onChange={() => toggleTask(task.id)}
-                                    className="w-5 h-5 rounded-md border-border bg-surface-tertiary text-accent-primary focus:ring-2 focus:ring-accent-primary/50 cursor-pointer transition-all flex-shrink-0"
+                                    className="w-5 h-5 rounded-md border-border bg-surface-tertiary cursor-pointer transition-all flex-shrink-0"
+                                    style={{
+                                      accentColor: 'var(--theme-color)',
+                                    }}
                                   />
                                   <span className="flex-1 text-sm font-medium line-through text-text-tertiary">
                                     {task.text}

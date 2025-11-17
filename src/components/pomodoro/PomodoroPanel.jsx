@@ -141,7 +141,10 @@ export default function PomodoroPanel({ isOpen, onClose, onTimerStart, onTimerSt
               className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/50"
             >
               <div className="flex items-center gap-3">
-                <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
+                <div 
+                  className="w-1.5 h-1.5 rounded-full"
+                  style={{ backgroundColor: 'var(--theme-color-60, rgba(34, 197, 94, 0.6))' }}
+                ></div>
                 <h3 className="text-xl font-sans font-semibold text-text-primary tracking-tight">Pomodoro Timer</h3>
               </div>
               <button
@@ -191,9 +194,10 @@ export default function PomodoroPanel({ isOpen, onClose, onTimerStart, onTimerSt
                       disabled={isRunning}
                       className={`px-3 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex items-center justify-center ${
                         selectedPreset === preset.value && !isRunning
-                          ? 'bg-accent-primary text-white'
+                          ? 'text-white'
                           : 'bg-surface-secondary text-text-secondary hover:bg-surface-tertiary hover:text-text-primary'
                       } ${isRunning ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                      style={selectedPreset === preset.value && !isRunning ? { backgroundColor: 'var(--theme-color)' } : {}}
                     >
                       {preset.label}
                     </button>
@@ -203,7 +207,10 @@ export default function PomodoroPanel({ isOpen, onClose, onTimerStart, onTimerSt
 
               {/* Timer display - zen aesthetic, prominent */}
               <div className="text-center mb-8">
-                <div className="text-6xl font-sans font-light text-accent-primary tabular-nums mb-3 tracking-tight">
+                <div 
+                  className="text-6xl font-sans font-light tabular-nums mb-3 tracking-tight"
+                  style={{ color: 'var(--theme-color)' }}
+                >
                   {formatTime(minutes, seconds)}
                 </div>
                 <div className="text-sm font-medium text-text-secondary uppercase tracking-wider">

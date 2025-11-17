@@ -5,6 +5,13 @@
 @tailwind utilities;
 
 @layer base {
+  /* CSS Variables for dynamic theme color */
+  :root {
+    --theme-color: rgb(34, 197, 94); /* Default teal green */
+    --theme-color-light: rgb(74, 222, 128);
+    --theme-color-dark: rgb(22, 163, 74);
+  }
+
   /* Respect reduced motion preference */
   @media (prefers-reduced-motion: reduce) {
     *,
@@ -37,7 +44,8 @@
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.03) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, var(--theme-color) 0%, transparent 70%);
+    opacity: 0.03;
     pointer-events: none;
     z-index: 5;
   }
@@ -57,18 +65,18 @@
   /* Panel base - lofizen glassmorphism */
   .panel {
     @apply bg-glass-soft backdrop-blur-md;
-    @apply border border-glass-border;
-    @apply rounded-xl;
+    @apply border rounded-xl;
     @apply shadow-medium;
     @apply transition-all duration-200;
+    border-color: var(--theme-color-border, rgba(34, 197, 94, 0.3));
   }
   
   .panel-strong {
     @apply bg-glass-medium backdrop-blur-lg;
-    @apply border border-glass-border;
-    @apply rounded-2xl;
+    @apply border rounded-2xl;
     @apply shadow-large;
     @apply transition-all duration-200;
+    border-color: var(--theme-color-border, rgba(34, 197, 94, 0.3));
   }
 
   /* Card - elevated content */
@@ -95,13 +103,14 @@
   .btn-icon {
     @apply w-9 h-9 rounded-lg;
     @apply flex items-center justify-center;
-    @apply bg-glass-soft backdrop-blur-sm border border-glass-border;
+    @apply bg-glass-soft backdrop-blur-sm border;
     @apply text-text-secondary;
     @apply transition-all duration-200 ease-out;
     @apply hover:bg-glass-medium hover:text-text-primary;
     @apply active:scale-95;
     @apply focus:outline-none;
     @apply leading-none;
+    border-color: var(--theme-color-border, rgba(34, 197, 94, 0.3));
   }
   
   .btn-secondary {
@@ -114,23 +123,29 @@
   }
   
   .btn-primary {
-    @apply bg-accent-primary text-white;
-    @apply border border-accent-primary/60;
+    @apply text-white;
+    @apply border;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-accent-secondary hover:scale-105;
+    @apply hover:opacity-90 hover:scale-105;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none;
     @apply font-medium;
+    background-color: var(--theme-color);
+    border-color: var(--theme-color-60, rgba(34, 197, 94, 0.6));
   }
   
   .input-base {
     @apply bg-surface-secondary border border-border;
     @apply rounded-xl px-4 py-3;
     @apply text-text-primary placeholder:text-text-tertiary;
-    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:border-accent-primary/50;
-    @apply focus:bg-surface-tertiary;
+    @apply focus:outline-none focus:bg-surface-tertiary;
     @apply transition-all duration-200;
     @apply text-sm;
+  }
+  
+  .input-base:focus {
+    border-color: var(--theme-color-50, rgba(34, 197, 94, 0.5));
+    box-shadow: 0 0 0 2px var(--theme-color-50, rgba(34, 197, 94, 0.5));
   }
   
   /* Chip/Mode button */
@@ -145,9 +160,10 @@
   }
   
   .chip-active {
-    @apply bg-accent-primary text-white;
-    @apply border-accent-primary/60;
+    @apply text-white;
     @apply font-medium;
+    background-color: var(--theme-color);
+    border-color: var(--theme-color-60, rgba(34, 197, 94, 0.6));
   }
   
   /* Slider base for settings - zen style */
@@ -162,19 +178,20 @@
   .slider-base::-webkit-slider-thumb {
     @apply appearance-none;
     @apply w-5 h-5 rounded-full;
-    @apply bg-accent-primary;
     @apply cursor-pointer;
     @apply transition-all duration-200 ease-out;
+    background-color: var(--theme-color);
     @apply hover:scale-110;
     @apply border-2 border-border;
   }
   
   .slider-base::-moz-range-thumb {
     @apply w-5 h-5 rounded-full;
-    @apply bg-accent-primary border-2 border-border;
+    @apply border-2 border-border;
     @apply cursor-pointer;
     @apply transition-all duration-200 ease-out;
     @apply hover:scale-110;
+    background-color: var(--theme-color);
   }
 
   /* Enhanced volume slider */

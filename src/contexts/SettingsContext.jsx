@@ -44,6 +44,7 @@ function getDefaultSettings() {
   return {
     sidebarPosition: 50, // 0-100, percentage from top
     idleTimeout: 300000, // 5 minutes in milliseconds
+    themeColor: '#22C55E', // Default teal green (rgb(34, 197, 94))
     clock: {
       enabled: true,
       size: 'medium', // small, medium, large

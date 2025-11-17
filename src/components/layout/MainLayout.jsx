@@ -26,6 +26,50 @@ export default function MainLayout() {
   const playerBarTimeoutRef = useRef(null)
   const playerBarAreaRef = useRef(null)
 
+  // Helper function to convert hex to RGB
+  const hexToRgb = (hex) => {
+    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex)
+    return result ? {
+      r: parseInt(result[1], 16),
+      g: parseInt(result[2], 16),
+      b: parseInt(result[3], 16)
+    } : null
+  }
+
+  // Apply theme color to CSS variables - runs on mount and when theme changes
+  useEffect(() => {
+    const applyTheme = () => {
+      const themeColor = settings.themeColor || '#22C55E'
+      const rgb = hexToRgb(themeColor)
+      if (rgb) {
+        // Set base color on document root
+        const root = document.documentElement
+        root.style.setProperty('--theme-color', `rgb(${rgb.r}, ${rgb.g}, ${rgb.b})`)
+        root.style.setProperty('--theme-color-rgb', `${rgb.r}, ${rgb.g}, ${rgb.b}`)
+        root.style.setProperty('--theme-color-border', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`)
+        
+        // Calculate lighter and darker variants
+        const light = { r: Math.min(255, rgb.r + 40), g: Math.min(255, rgb.g + 25), b: Math.min(255, rgb.b + 34) }
+        const dark = { r: Math.max(0, rgb.r - 12), g: Math.max(0, rgb.g - 34), b: Math.max(0, rgb.b - 20) }
+        root.style.setProperty('--theme-color-light', `rgb(${light.r}, ${light.g}, ${light.b})`)
+        root.style.setProperty('--theme-color-dark', `rgb(${dark.r}, ${dark.g}, ${dark.b})`)
+        
+        // Add rgba versions with common opacities for better browser support
+        root.style.setProperty('--theme-color-5', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.05)`)
+        root.style.setProperty('--theme-color-10', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.1)`)
+        root.style.setProperty('--theme-color-15', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.15)`)
+        root.style.setProperty('--theme-color-20', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.2)`)
+        root.style.setProperty('--theme-color-30', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.3)`)
+        root.style.setProperty('--theme-color-40', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.4)`)
+        root.style.setProperty('--theme-color-50', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.5)`)
+        root.style.setProperty('--theme-color-60', `rgba(${rgb.r}, ${rgb.g}, ${rgb.b}, 0.6)`)
+      }
+    }
+    
+    // Apply immediately on mount and when theme changes
+    applyTheme()
+  }, [settings.themeColor])
+
   // Expose startFocusSession for SSG CTA
   useEffect(() => {
     window.startFocusSession = () => {
@@ -118,7 +162,13 @@ export default function MainLayout() {
       {/* Top left - Branding */}
       <div className={`absolute top-6 left-6 z-50 transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}>
         <h1 className="text-2xl font-sans font-bold text-text-primary tracking-tight">
-          Calm<span className="text-accent-primary bg-accent-primary/10 px-2 py-0.5 rounded-lg">Cove</span>
+          Calm<span 
+            className="px-2 py-0.5 rounded-lg"
+            style={{ 
+              color: 'var(--theme-color)',
+              backgroundColor: 'var(--theme-color-10, rgba(34, 197, 94, 0.1))'
+            }}
+          >Cove</span>
         </h1>
       </div>
 
@@ -159,7 +209,14 @@ export default function MainLayout() {
             onToggleMixer={() => setActivePanel(activePanel === 'mixer' ? null : 'mixer')}
             onToggleTimer={() => setActivePanel(activePanel === 'pomodoro' ? null : 'pomodoro')}
             onToggleTasks={() => setActivePanel(activePanel === 'tasks' ? null : 'tasks')}
-            onToggleNotes={() => setActivePanel(activePanel === 'tasks' ? null : 'tasks')}
+            onToggleNotes={() => {
+              if (activePanel === 'tasks') {
+                // If tasks panel is open, switch to notes tab
+                setActivePanel('notes')
+              } else {
+                setActivePanel(activePanel === 'notes' ? null : 'notes')
+              }
+            }}
           />
         </div>
       </div>
@@ -184,8 +241,12 @@ export default function MainLayout() {
         )}
 
         {/* Tasks & Notes Panel */}
-        {activePanel === 'tasks' && (
-          <TasksNotesPanel isOpen={true} onClose={() => setActivePanel(null)} />
+        {(activePanel === 'tasks' || activePanel === 'notes') && (
+          <TasksNotesPanel 
+            isOpen={true} 
+            onClose={() => setActivePanel(null)}
+            initialTab={activePanel === 'notes' ? 'notes' : 'tasks'}
+          />
         )}
 
         {/* Background Panel */}

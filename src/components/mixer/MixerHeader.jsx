@@ -5,7 +5,10 @@ export default function MixerHeader({ onClose, onReset, onMuteAll, totalActive }
   return (
     <div className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/50">
       <div className="flex items-center gap-3">
-        <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
+        <div 
+          className="w-1.5 h-1.5 rounded-full"
+          style={{ backgroundColor: 'var(--theme-color-60, rgba(34, 197, 94, 0.6))' }}
+        ></div>
         <h3 className="text-xl font-sans font-semibold text-text-primary tracking-tight">Mixer</h3>
         {totalActive > 0 && (
           <span className="text-xs font-medium text-text-tertiary bg-surface-secondary px-2 py-0.5 rounded-full">

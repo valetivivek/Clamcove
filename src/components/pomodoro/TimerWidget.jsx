@@ -50,15 +50,24 @@ export default function TimerWidget({ minutes, seconds, mode, isRunning, onClick
       className="panel flex items-center gap-3 px-4 py-2.5 hover:bg-surface-tertiary transition-all duration-200 group cursor-pointer"
       aria-label="Open timer"
     >
-      <div className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
-        isRunning ? 'bg-accent-primary/20' : 'bg-surface-secondary'
-      }`}>
-        <IconTimer className={`w-4 h-4 ${isRunning ? 'text-accent-primary' : 'text-text-secondary'}`} />
+      <div 
+        className={`w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 ${
+          isRunning ? '' : 'bg-surface-secondary'
+        }`}
+        style={isRunning ? { backgroundColor: 'var(--theme-color-20, rgba(34, 197, 94, 0.2))' } : {}}
+      >
+        <IconTimer 
+          className="w-4 h-4"
+          style={isRunning ? { color: 'var(--theme-color)' } : {}}
+        />
       </div>
       <div className="flex flex-col items-start min-w-0">
-        <div className={`text-lg font-sans font-light tabular-nums leading-none ${
-          isRunning ? 'text-accent-primary' : 'text-text-secondary'
-        }`}>
+        <div 
+          className={`text-lg font-sans font-light tabular-nums leading-none ${
+            isRunning ? '' : 'text-text-secondary'
+          }`}
+          style={isRunning ? { color: 'var(--theme-color)' } : {}}
+        >
           {formatTime(displayMinutes, displaySeconds)}
         </div>
         <div className="text-xs text-text-tertiary uppercase tracking-wider">
