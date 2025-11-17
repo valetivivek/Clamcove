@@ -75,7 +75,7 @@ export default function MixerSliderGroup({ slider, value, onChange, onToggle, is
           <div 
             className="absolute inset-0 opacity-20 transition-opacity duration-300"
             style={{
-              background: `radial-gradient(circle at left center, rgb(96, 165, 250) 0%, transparent 60%)`,
+              background: `radial-gradient(circle at left center, rgb(34, 197, 94) 0%, transparent 60%)`,
             }}
           />
         )}
@@ -156,15 +156,15 @@ export default function MixerSliderGroup({ slider, value, onChange, onToggle, is
                 width: `${value}%`,
                 background: isPlaying && isAmbient
                   ? `linear-gradient(90deg, 
-                      rgb(96, 165, 250) 0%, 
-                      rgb(96, 165, 250) 50%,
-                      rgb(147, 197, 253) 100%)`
+                      rgb(34, 197, 94) 0%, 
+                      rgb(34, 197, 94) 50%,
+                      rgb(74, 222, 128) 100%)`
                   : `linear-gradient(90deg, 
-                      rgb(96, 165, 250) 0%, 
-                      rgb(96, 165, 250) 50%,
-                      rgb(147, 197, 253) 100%)`,
+                      rgb(34, 197, 94) 0%, 
+                      rgb(34, 197, 94) 50%,
+                      rgb(74, 222, 128) 100%)`,
                 boxShadow: isPlaying && isAmbient
-                  ? '0 0 12px rgba(96, 165, 250, 0.4), inset 0 0 6px rgba(96, 165, 250, 0.2)'
+                  ? '0 0 12px rgba(34, 197, 94, 0.4), inset 0 0 6px rgba(34, 197, 94, 0.2)'
                   : 'none',
               }}
             />

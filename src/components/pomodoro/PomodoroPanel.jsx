@@ -133,7 +133,7 @@ export default function PomodoroPanel({ isOpen, onClose, onTimerStart, onTimerSt
     <>
       {/* Panel - centered and draggable, no overlay */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in" style={{ pointerEvents: 'none' }}>
-        <DraggablePanel dragHandleRef={dragHandleRef}>
+        <DraggablePanel dragHandleRef={dragHandleRef} panelId="pomodoro">
           <div className="panel-strong overflow-hidden" style={{ pointerEvents: 'auto' }}>
             {/* Drag handle - header area */}
             <div 

@@ -6,31 +6,32 @@ export default {
   ],
   theme: {
     extend: {
-      // CalmCove Japanese Zen - Plain Neutral Palette
+      // CalmCove - Lofizen.co Inspired Design
       colors: {
-        // Surface colors - pure neutral grays
+        // Surface colors - dark backgrounds matching lofizen
         surface: {
-          primary: 'rgb(20, 20, 20)',      // Deepest, almost black
-          secondary: 'rgb(30, 30, 30)',    // Medium charcoal
-          tertiary: 'rgb(40, 40, 40)',     // Lighter charcoal for elevated content
+          primary: 'rgb(18, 18, 20)',      // Deep dark
+          secondary: 'rgb(26, 26, 30)',    // Medium dark
+          tertiary: 'rgb(34, 34, 40)',      // Elevated content
         },
-        // Accent colors - neutral gray
+        // Accent colors - teal/green matching lofizen
         accent: {
-          primary: 'rgb(120, 120, 120)',   // Neutral gray
-          secondary: 'rgb(140, 140, 140)', // Lighter gray for interactive states
+          primary: 'rgb(34, 197, 94)',    // Teal green - main accent (from lofizen images)
+          secondary: 'rgb(74, 222, 128)',  // Lighter teal for hover
+          dark: 'rgb(22, 163, 74)',       // Darker teal for accents
         },
-        // Text colors - WCAG AA compliant (4.5:1+ contrast)
+        // Text colors - clean white
         text: {
-          primary: 'rgb(240, 245, 250)',           // 12.5:1 contrast ✓✓✓
-          secondary: 'rgba(200, 210, 220, 0.85)',  // 4.8:1 contrast ✓ (improved)
-          tertiary: 'rgba(160, 170, 180, 0.7)',    // 3.5:1 contrast ✓ (improved)
+          primary: 'rgb(255, 255, 255)',           // Pure white
+          secondary: 'rgba(255, 255, 255, 0.7)',  // Muted white
+          tertiary: 'rgba(255, 255, 255, 0.5)',    // Dimmed white
         },
-        // Border color - improved visibility
-        border: 'rgba(255, 255, 255, 0.12)', // Increased from 0.1
-        // Status colors - muted and calm
-        success: 'rgb(140, 180, 160)',     // Soft sage green
-        warning: 'rgb(200, 180, 140)',     // Warm amber-gray
-        error: 'rgb(200, 160, 160)',       // Soft rose-gray
+        // Border color - subtle
+        border: 'rgba(255, 255, 255, 0.1)', // Subtle border
+        // Status colors
+        success: 'rgb(34, 197, 94)',     // Green
+        warning: 'rgb(251, 191, 36)',      // Yellow
+        error: 'rgb(239, 68, 68)',        // Red
         // Legacy support (keeping for gradual migration)
         coolBlue: {
           DEFAULT: 'rgb(120, 120, 120)',
@@ -38,9 +39,9 @@ export default {
           dark: 'rgb(100, 100, 100)',
         },
         darkCool: {
-          DEFAULT: 'rgb(20, 20, 20)',
-          light: 'rgb(30, 30, 30)',
-          lighter: 'rgb(40, 40, 40)',
+          DEFAULT: 'rgb(18, 18, 20)',      // Deep dark
+          light: 'rgb(26, 26, 30)',        // Medium dark
+          lighter: 'rgb(34, 34, 40)',     // Light dark
         },
         charcoal: {
           DEFAULT: '#2a2a2a',
@@ -53,21 +54,21 @@ export default {
           dark: '#059669',
         },
         textPrimary: {
-          DEFAULT: 'rgb(240, 245, 250)',
-          muted: 'rgba(240, 245, 250, 0.7)',
-          dim: 'rgba(240, 245, 250, 0.4)',
+          DEFAULT: 'rgb(255, 255, 255)',      // Pure white
+          muted: 'rgba(255, 255, 255, 0.7)', // Muted
+          dim: 'rgba(255, 255, 255, 0.5)',    // Dimmed
         },
         primaryAccent: {
-          DEFAULT: 'rgb(120, 120, 120)',
-          light: 'rgb(140, 140, 140)',
-          dark: 'rgb(100, 100, 100)',
+          DEFAULT: 'rgb(34, 197, 94)',       // Teal green
+          light: 'rgb(74, 222, 128)',       // Light teal
+          dark: 'rgb(22, 163, 74)',        // Dark teal
         },
-        // Temporary: Glass colors for backward compatibility (will be removed)
+        // Glass colors - lofizen style glassmorphism
         glass: {
-          soft: 'rgba(30, 30, 30, 0.95)',
-          medium: 'rgba(40, 40, 40, 0.95)',
-          strong: 'rgba(40, 40, 40, 0.98)',
-          border: 'rgba(255, 255, 255, 0.1)',
+          soft: 'rgba(26, 26, 30, 0.8)',      // Translucent dark
+          medium: 'rgba(26, 26, 30, 0.9)',   // Medium translucent
+          strong: 'rgba(18, 18, 20, 0.95)',      // Strong dark panel
+          border: 'rgba(34, 197, 94, 0.3)',     // Teal border glow
         },
       },
       // Font families
@@ -87,12 +88,12 @@ export default {
       },
       // Box shadows
       boxShadow: {
-        'soft': '0 2px 8px rgba(0, 0, 0, 0.15)',
-        'medium': '0 4px 16px rgba(0, 0, 0, 0.2)',
-        'large': '0 8px 32px rgba(0, 0, 0, 0.25)',
-        'glow': '0 0 15px rgba(120, 120, 120, 0.15)',
-        'glow-lg': '0 0 25px rgba(120, 120, 120, 0.2)',
-        'inner-soft': 'inset 0 2px 4px rgba(0, 0, 0, 0.1)',
+        'soft': '0 2px 8px rgba(0, 0, 0, 0.2)',
+        'medium': '0 4px 16px rgba(0, 0, 0, 0.25)',
+        'large': '0 8px 32px rgba(0, 0, 0, 0.3)',
+        'glow': '0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.1)',
+        'glow-lg': '0 0 30px rgba(34, 197, 94, 0.5), 0 0 60px rgba(34, 197, 94, 0.15)',
+        'inner-soft': 'inset 0 2px 4px rgba(0, 0, 0, 0.15)',
       },
       // Custom animations - smooth and warm
       animation: {
@@ -116,8 +117,8 @@ export default {
           '100%': { opacity: '0' },
         },
         glowPulse: {
-          '0%': { boxShadow: '0 0 10px rgba(120, 120, 120, 0.1)' },
-          '100%': { boxShadow: '0 0 20px rgba(120, 120, 120, 0.15)' },
+          '0%': { boxShadow: '0 0 20px rgba(34, 197, 94, 0.4), 0 0 40px rgba(34, 197, 94, 0.1)' },
+          '100%': { boxShadow: '0 0 30px rgba(34, 197, 94, 0.6), 0 0 60px rgba(34, 197, 94, 0.2)' },
         },
         scaleIn: {
           '0%': { transform: 'scale(0.95)', opacity: '0' },

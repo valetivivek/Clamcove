@@ -48,6 +48,10 @@ function getDefaultSettings() {
       enabled: true,
       size: 'medium', // small, medium, large
       style: 'digital', // digital, minimal, analog
+    },
+    playerBar: {
+      autoHide: true, // Enable auto-hide feature
+      hideTimeout: 600000, // 10 minutes in milliseconds (default)
     }
   }
 }

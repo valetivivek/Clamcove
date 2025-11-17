@@ -1,7 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react'
 
-export default function DraggablePanel({ children, dragHandleRef }) {
-  const [position, setPosition] = useState({ x: 0, y: 0 })
+export default function DraggablePanel({ children, dragHandleRef, panelId }) {
+  // Load position from sessionStorage on mount
+  const [position, setPosition] = useState(() => {
+    if (panelId) {
+      const saved = sessionStorage.getItem(`calmcove-panel-${panelId}-position`)
+      if (saved) {
+        try {
+          return JSON.parse(saved)
+        } catch (e) {
+          return { x: 0, y: 0 }
+        }
+      }
+    }
+    return { x: 0, y: 0 }
+  })
   const [isDragging, setIsDragging] = useState(false)
   const [dragStart, setDragStart] = useState({ x: 0, y: 0 })
   const panelRef = useRef(null)
@@ -57,7 +70,13 @@ export default function DraggablePanel({ children, dragHandleRef }) {
       const constrainedX = Math.max(-maxX, Math.min(maxX, newX))
       const constrainedY = Math.max(-maxY, Math.min(maxY, newY))
 
-      setPosition({ x: constrainedX, y: constrainedY })
+      const newPosition = { x: constrainedX, y: constrainedY }
+      setPosition(newPosition)
+      
+      // Save position to sessionStorage
+      if (panelId) {
+        sessionStorage.setItem(`calmcove-panel-${panelId}-position`, JSON.stringify(newPosition))
+      }
     }
 
     const handleMouseUp = (e) => {
@@ -65,6 +84,10 @@ export default function DraggablePanel({ children, dragHandleRef }) {
       setIsDragging(false)
       if (dragHandleRef?.current) {
         dragHandleRef.current.style.cursor = 'grab'
+      }
+      // Ensure position is saved on mouse up
+      if (panelId && position) {
+        sessionStorage.setItem(`calmcove-panel-${panelId}-position`, JSON.stringify(position))
       }
     }
 
@@ -80,15 +103,19 @@ export default function DraggablePanel({ children, dragHandleRef }) {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('mouseup', handleMouseUp)
     }
-  }, [isDragging, dragStart, dragHandleRef])
+  }, [isDragging, dragStart, dragHandleRef, panelId, position])
 
+  // Check if position was loaded from storage (not default 0,0)
+  const hasSavedPosition = panelId && (position.x !== 0 || position.y !== 0)
+  
   return (
     <div
       ref={panelRef}
       className="relative"
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
-        transition: isDragging ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+        // Only animate transform if dragging, or if there's no saved position (first time opening)
+        transition: isDragging ? 'none' : (hasSavedPosition ? 'none' : 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)'),
       }}
     >
       {children}

@@ -122,7 +122,7 @@ export default function TasksNotesPanel({ isOpen, onClose }) {
   return (
     <>
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[600px] max-w-[90vw] animate-scale-in" style={{ pointerEvents: 'none' }}>
-        <DraggablePanel dragHandleRef={dragHandleRef}>
+        <DraggablePanel dragHandleRef={dragHandleRef} panelId="tasks">
           <div className="panel-strong max-h-[85vh] flex flex-col overflow-hidden" style={{ pointerEvents: 'auto' }}>
             {/* Drag handle - header area */}
             <div 

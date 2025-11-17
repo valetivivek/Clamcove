@@ -36,9 +36,8 @@ export default function BackgroundLayer({ backgroundId }) {
       
       const handleCanPlay = () => {
         setVideoLoaded(true)
-        video.play().catch((err) => {
-          console.warn('Video autoplay failed:', err)
-          // Still show video even if autoplay fails
+        video.play().catch(() => {
+          // Autoplay failed (user interaction required) - still show video
           setVideoLoaded(true)
         })
       }
@@ -47,8 +46,7 @@ export default function BackgroundLayer({ backgroundId }) {
         setVideoLoaded(true)
       }
       
-      const handleError = (e) => {
-        console.error('Video loading error:', e)
+      const handleError = () => {
         setVideoError(true)
         setVideoLoaded(false)
       }

@@ -135,7 +135,7 @@ export default function MixerPanel({ isOpen, onClose }) {
     <>
       {/* Panel - centered, draggable, and resizable */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 animate-scale-in" style={{ pointerEvents: 'none' }}>
-        <DraggablePanel dragHandleRef={dragHandleRef}>
+        <DraggablePanel dragHandleRef={dragHandleRef} panelId="mixer">
           <ResizablePanel minWidth={500} minHeight={500} maxWidth={800} maxHeight={700}>
             <div 
               className="panel-strong h-full flex flex-col overflow-hidden" 
@@ -162,7 +162,7 @@ export default function MixerPanel({ isOpen, onClose }) {
                       <div 
                         className="absolute inset-0 opacity-10 transition-opacity duration-300"
                         style={{
-                          background: `radial-gradient(circle at center, rgb(96, 165, 250) 0%, transparent 70%)`,
+                          background: `radial-gradient(circle at center, rgb(34, 197, 94) 0%, transparent 70%)`,
                           opacity: (sliderValues.volume || volumeSlider.defaultValue) / 100 * 0.15
                         }}
                       />
@@ -175,7 +175,7 @@ export default function MixerPanel({ isOpen, onClose }) {
                           <div className="flex items-center gap-3">
                             <div className="text-right">
                               <div className="text-xl font-bold text-accent-primary tabular-nums" style={{
-                                textShadow: '0 0 15px rgba(96, 165, 250, 0.5)'
+                                textShadow: '0 0 15px rgba(34, 197, 94, 0.5)'
                               }}>
                                 {sliderValues.volume || volumeSlider.defaultValue}%
                               </div>
@@ -196,14 +196,14 @@ export default function MixerPanel({ isOpen, onClose }) {
                                   cy="50"
                                   r="40"
                                   fill="none"
-                                  stroke="rgb(96, 165, 250)"
+                                  stroke="rgb(34, 197, 94)"
                                   strokeWidth="6"
                                   strokeLinecap="round"
                                   strokeDasharray={`${2 * Math.PI * 40}`}
                                   strokeDashoffset={`${2 * Math.PI * 40 * (1 - (sliderValues.volume || volumeSlider.defaultValue) / 100)}`}
                                   className="transition-all duration-300"
                                   style={{
-                                    filter: 'drop-shadow(0 0 6px rgba(96, 165, 250, 0.6))'
+                                    filter: 'drop-shadow(0 0 6px rgba(34, 197, 94, 0.6))'
                                   }}
                                 />
                               </svg>
@@ -233,10 +233,10 @@ export default function MixerPanel({ isOpen, onClose }) {
                               style={{
                                 width: `${sliderValues.volume || volumeSlider.defaultValue}%`,
                                 background: `linear-gradient(90deg, 
-                                  rgb(96, 165, 250) 0%, 
-                                  rgb(96, 165, 250) 50%,
-                                  rgb(147, 197, 253) 100%)`,
-                                boxShadow: '0 0 15px rgba(96, 165, 250, 0.4), inset 0 0 8px rgba(96, 165, 250, 0.2)',
+                                  rgb(34, 197, 94) 0%, 
+                                  rgb(34, 197, 94) 50%,
+                                  rgb(74, 222, 128) 100%)`,
+                                boxShadow: '0 0 15px rgba(34, 197, 94, 0.4), inset 0 0 8px rgba(34, 197, 94, 0.2)',
                                 transition: 'none', // Remove transition for immediate response
                               }}
                             />
@@ -316,7 +316,7 @@ export default function MixerPanel({ isOpen, onClose }) {
                           onChange={(e) => handleSliderChange('musicVolume', parseInt(e.target.value))}
                           className="slider-base w-full"
                           style={{
-                            background: `linear-gradient(to right, rgb(96, 165, 250) 0%, rgb(96, 165, 250) ${sliderValues.musicVolume !== undefined ? sliderValues.musicVolume : musicVolumeSlider.defaultValue}%, rgba(255,255,255,0.1) ${sliderValues.musicVolume !== undefined ? sliderValues.musicVolume : musicVolumeSlider.defaultValue}%, rgba(255,255,255,0.1) 100%)`
+                            background: `linear-gradient(to right, rgb(34, 197, 94) 0%, rgb(34, 197, 94) ${sliderValues.musicVolume !== undefined ? sliderValues.musicVolume : musicVolumeSlider.defaultValue}%, rgba(255,255,255,0.1) ${sliderValues.musicVolume !== undefined ? sliderValues.musicVolume : musicVolumeSlider.defaultValue}%, rgba(255,255,255,0.1) 100%)`
                           }}
                           aria-label="Music Volume"
                         />
@@ -388,11 +388,13 @@ const Visualizer = ({ value, max = 100, isVolume = false }) => {
           : 0
         const height = Math.max(3, baseHeight + variation)
         
-        // Color gradient based on position and value - neutral gray
+        // Color gradient based on position and value - teal green
         const intensity = value / max
-        const lightness = 40 + intensity * 30 // Gray gradient based on volume
+        const hue = 142 // Teal green hue
+        const saturation = 70 + intensity * 10 // 70-80% saturation
+        const lightness = 45 + intensity * 10 // 45-55% lightness
         const color = isActive 
-          ? `hsl(0, 0%, ${lightness}%)`
+          ? `hsl(${hue}, ${saturation}%, ${lightness}%)`
           : 'rgba(255, 255, 255, 0.1)'
         
         return (

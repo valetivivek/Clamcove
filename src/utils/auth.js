@@ -37,7 +37,9 @@ export const setAuthToken = async (token, maxAge = 604800) => {
     
     return await response.json()
   } catch (error) {
-    console.error('Auth error:', error)
+    if (import.meta.env.DEV) {
+      console.error('Auth error:', error)
+    }
     throw error
   }
 }
@@ -59,7 +61,9 @@ export const clearAuthToken = async () => {
     
     return await response.json()
   } catch (error) {
-    console.error('Auth error:', error)
+    if (import.meta.env.DEV) {
+      console.error('Auth error:', error)
+    }
     throw error
   }
 }
@@ -82,7 +86,9 @@ export const checkAuth = async () => {
     const data = await response.json()
     return data.authenticated === true
   } catch (error) {
-    console.error('Auth check error:', error)
+    if (import.meta.env.DEV) {
+      console.error('Auth check error:', error)
+    }
     return false
   }
 }
@@ -104,7 +110,9 @@ export const getCurrentUser = async () => {
     
     return await response.json()
   } catch (error) {
-    console.error('Get user error:', error)
+    if (import.meta.env.DEV) {
+      console.error('Get user error:', error)
+    }
     return null
   }
 }

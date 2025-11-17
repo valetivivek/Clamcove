@@ -33,3 +33,17 @@ dist-ssr
 # These files are too large for git. Add them manually after cloning.
 public/assets/images/backgrounds/*.mp4
 public/assets/videos/backgrounds/*.mp4
+
+# Image files
+*.jpg
+*.jpeg
+*.png
+*.gif
+*.webp
+*.bmp
+*.ico
+*.svg
+*.tiff
+*.tif
+*.heic
+*.heif

@@ -7,6 +7,7 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: false,
     minify: 'esbuild',
+    cssMinify: true,
     rollupOptions: {
       output: {
         manualChunks: (id) => {
@@ -27,10 +28,16 @@ export default defineConfig({
             return 'panels'
           }
         },
+        // Optimize asset file names
+        assetFileNames: 'assets/[name]-[hash][extname]',
+        chunkFileNames: 'assets/[name]-[hash].js',
+        entryFileNames: 'assets/[name]-[hash].js',
       },
     },
     // Optimize chunk size
     chunkSizeWarningLimit: 1000,
+    // Target modern browsers for smaller bundle
+    target: 'es2015',
   },
   publicDir: 'public',
   // Optimize dependencies

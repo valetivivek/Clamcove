@@ -13,7 +13,7 @@ export default function CenterClock() {
     return () => clearInterval(interval)
   }, [])
 
-  // Debug: Check if settings are loaded
+  // Check if settings are loaded
   if (!settings || !settings.clock) {
     // If settings not loaded yet, show default clock
     return (

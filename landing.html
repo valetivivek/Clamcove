@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CalmCove - Focus music and productivity tools. Calming audio and simple tools to help you stay focused and productive.">
+  <meta name="keywords" content="focus music, productivity tools, pomodoro timer, ambient sounds, lofi music, focus app">
+  <meta name="author" content="CalmCove">
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="CalmCove - Focus Music and Productivity Tools">
+  <meta property="og:description" content="Calming audio and simple tools to help you stay focused and productive.">
+  <meta property="og:image" content="/assets/img/favicon.svg">
+  
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:title" content="CalmCove - Focus Music and Productivity Tools">
+  <meta property="twitter:description" content="Calming audio and simple tools to help you stay focused and productive.">
+  
+  <title>CalmCove - Focus Music and Productivity Tools</title>
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Custom Styles -->
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+    
+    * {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    
+    body {
+      scroll-behavior: smooth;
+    }
+    
+    /* Smooth fade-in animation */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    
+    .fade-in-up {
+      animation: fadeInUp 0.6s ease-out forwards;
+    }
+    
+    /* Intersection Observer for scroll animations */
+    .scroll-reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+    
+    .scroll-reveal.revealed {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* Gradient background - clean theme */
+    .gradient-bg {
+      background: linear-gradient(135deg, #121212 0%, #1c1c1c 50%, #121212 100%);
+    }
+    
+    /* Glow effect on hover - cool blue */
+    .glow-hover {
+      transition: all 0.3s ease;
+    }
+    
+    .glow-hover:hover {
+      box-shadow: 0 0 30px rgba(96, 165, 250, 0.3);
+      transform: translateY(-2px);
+    }
+    
+    /* Custom scrollbar */
+    ::-webkit-scrollbar {
+      width: 10px;
+    }
+    
+    ::-webkit-scrollbar-track {
+      background: #0f172a;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+      background: #334155;
+      border-radius: 5px;
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+      background: #475569;
+    }
+  </style>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+      colors: {
+        'dark-bg': '#121212',
+        'dark-section': '#1c1c1c',
+        'accent': '#60A5FA',
+        'accent-hover': '#93C5FD',
+      }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-dark-bg text-gray-100">
+  
+  <!-- Navigation -->
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-dark-bg/95 backdrop-blur-md border-b border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <div class="flex items-center">
+          <a href="#" class="text-2xl font-semibold text-white">
+            Calm<span class="text-accent">Cove</span>
+          </a>
+        </div>
+        
+        <!-- Navigation Links -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#home" class="text-gray-300 hover:text-white transition-colors">Home</a>
+          <a href="#features" class="text-gray-300 hover:text-white transition-colors">Features</a>
+          <a href="#demo" class="text-gray-300 hover:text-white transition-colors">Demo</a>
+          <a href="#pricing" class="text-gray-300 hover:text-white transition-colors">Pricing</a>
+          <a href="#contact" class="text-gray-300 hover:text-white transition-colors">Contact</a>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button id="mobile-menu-btn" class="md:hidden text-gray-300 hover:text-white">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-dark-section border-t border-gray-800">
+      <div class="px-4 py-4 space-y-3">
+        <a href="#home" class="block text-gray-300 hover:text-white transition-colors">Home</a>
+        <a href="#features" class="block text-gray-300 hover:text-white transition-colors">Features</a>
+        <a href="#demo" class="block text-gray-300 hover:text-white transition-colors">Demo</a>
+        <a href="#pricing" class="block text-gray-300 hover:text-white transition-colors">Pricing</a>
+        <a href="#contact" class="block text-gray-300 hover:text-white transition-colors">Contact</a>
+      </div>
+    </div>
+  </nav>
+  
+  <!-- Hero Section -->
+  <section id="home" class="gradient-bg pt-32 pb-20 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto text-center">
+      <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 fade-in-up">
+        Your Zen Corner for
+        <span class="text-accent">Deep Focus</span>
+      </h1>
+      <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto fade-in-up" style="animation-delay: 0.2s;">
+        Immerse yourself in calming ambient sounds, curated focus music, and powerful productivity tools designed to help you achieve flow state.
+      </p>
+      <div class="fade-in-up" style="animation-delay: 0.4s;">
+        <a href="#demo" class="inline-block bg-accent hover:bg-accent-hover text-white font-semibold px-8 py-4 rounded-xl transition-all duration-300 glow-hover">
+          Start Your Focus Session
+        </a>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Features Section -->
+  <section id="features" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-section">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 scroll-reveal">
+        Everything You Need to Focus
+      </h2>
+      <p class="text-xl text-gray-400 text-center mb-16 scroll-reveal">
+        Simple, powerful tools that work together seamlessly
+      </p>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Feature 1 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 hover:border-accent/50 transition-all duration-300 scroll-reveal glow-hover">
+          <div class="w-16 h-16 bg-accent/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v13M9 19c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zm12-3c0 1.105-1.343 2-3 2s-3-.895-3-2 1.343-2 3-2 3 .895 3 2zM9 10l12-3"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Lofi Sound Collection</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Curated selection of lofi beats, ambient sounds, and focus music. Mix and match different tracks to create your perfect study atmosphere.
+          </p>
+        </div>
+        
+        <!-- Feature 2 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 hover:border-accent/50 transition-all duration-300 scroll-reveal glow-hover">
+          <div class="w-16 h-16 bg-accent/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Built-in Focus Timer</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Integrated Pomodoro timer with customizable work and break intervals. Track your focus sessions and build better productivity habits.
+          </p>
+        </div>
+        
+        <!-- Feature 3 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 hover:border-accent/50 transition-all duration-300 scroll-reveal glow-hover">
+          <div class="w-16 h-16 bg-accent/20 rounded-xl flex items-center justify-center mb-6">
+            <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <h3 class="text-2xl font-semibold mb-4">Productivity Stats</h3>
+          <p class="text-gray-400 leading-relaxed">
+            Simple, elegant statistics to track your focus time, completed sessions, and productivity streaks. Visualize your progress over time.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Demo Section -->
+  <section id="demo" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-bg">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 scroll-reveal">
+        See It In Action
+      </h2>
+      <p class="text-xl text-gray-400 text-center mb-16 scroll-reveal">
+        Experience the clean, distraction-free interface
+      </p>
+      
+      <div class="max-w-4xl mx-auto scroll-reveal">
+        <!-- Mockup Card -->
+        <div class="bg-dark-section rounded-3xl p-8 md:p-12 border border-gray-800 shadow-2xl">
+          <div class="bg-dark-bg rounded-2xl p-6 md:p-8">
+            <!-- Mock Player Interface -->
+            <div class="mb-8">
+              <div class="flex items-center justify-between mb-6">
+                <div>
+                  <h3 class="text-xl font-semibold mb-1">Current Track</h3>
+                  <p class="text-gray-400 text-sm">Lofi Study Beats - Chill Vibes</p>
+                </div>
+                <div class="flex items-center space-x-4">
+                  <button class="w-12 h-12 rounded-full bg-accent/20 hover:bg-accent/30 flex items-center justify-center transition-colors">
+                    <svg class="w-6 h-6 text-accent" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M8 5v14l11-7z"/>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Progress Bar -->
+              <div class="mb-4">
+                <div class="h-1 bg-gray-800 rounded-full overflow-hidden">
+                  <div class="h-full bg-accent rounded-full" style="width: 45%"></div>
+                </div>
+                <div class="flex justify-between text-xs text-gray-500 mt-2">
+                  <span>1:23</span>
+                  <span>3:45</span>
+                </div>
+              </div>
+            </div>
+            
+            <!-- Timer Widget -->
+            <div class="bg-dark-section rounded-xl p-6 border border-gray-800">
+              <div class="text-center">
+                <div class="text-5xl font-light mb-2 text-accent">25:00</div>
+                <p class="text-gray-400 text-sm mb-4">Focus Session</p>
+                <div class="flex justify-center space-x-2">
+                  <div class="w-2 h-2 rounded-full bg-accent"></div>
+                  <div class="w-2 h-2 rounded-full bg-gray-700"></div>
+                  <div class="w-2 h-2 rounded-full bg-gray-700"></div>
+                  <div class="w-2 h-2 rounded-full bg-gray-700"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Testimonials Section -->
+  <section class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-section">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 scroll-reveal">
+        Loved by Focus Seekers
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-8">
+        <!-- Testimonial 1 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 scroll-reveal">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-semibold text-lg mr-4">
+              AS
+            </div>
+            <div>
+              <h4 class="font-semibold">Alex Smith</h4>
+              <p class="text-sm text-gray-400">Student</p>
+            </div>
+          </div>
+          <p class="text-gray-300 leading-relaxed">
+            "CalmCove has completely transformed my study sessions. The ambient sounds help me enter flow state instantly, and the timer keeps me on track."
+          </p>
+        </div>
+        
+        <!-- Testimonial 2 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 scroll-reveal">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-semibold text-lg mr-4">
+              MJ
+            </div>
+            <div>
+              <h4 class="font-semibold">Maria Johnson</h4>
+              <p class="text-sm text-gray-400">Remote Worker</p>
+            </div>
+          </div>
+          <p class="text-gray-300 leading-relaxed">
+            "As someone who works from home, CalmCove helps me create the perfect focus environment. The minimalist design is exactly what I needed."
+          </p>
+        </div>
+        
+        <!-- Testimonial 3 -->
+        <div class="bg-dark-bg p-8 rounded-2xl border border-gray-800 scroll-reveal">
+          <div class="flex items-center mb-6">
+            <div class="w-12 h-12 rounded-full bg-accent/20 flex items-center justify-center text-accent font-semibold text-lg mr-4">
+              DR
+            </div>
+            <div>
+              <h4 class="font-semibold">David Rodriguez</h4>
+              <p class="text-sm text-gray-400">Creative Professional</p>
+            </div>
+          </div>
+          <p class="text-gray-300 leading-relaxed">
+            "The combination of music and productivity tools in one place is brilliant. It's become an essential part of my daily workflow."
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Pricing Section -->
+  <section id="pricing" class="py-20 px-4 sm:px-6 lg:px-8 bg-dark-bg">
+    <div class="max-w-7xl mx-auto">
+      <h2 class="text-4xl md:text-5xl font-bold text-center mb-4 scroll-reveal">
+        Choose Your Plan
+      </h2>
+      <p class="text-xl text-gray-400 text-center mb-16 scroll-reveal">
+        Start free, upgrade when you're ready
+      </p>
+      
+      <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <!-- Free Plan -->
+        <div class="bg-dark-section p-8 rounded-2xl border border-gray-800 scroll-reveal">
+          <h3 class="text-2xl font-semibold mb-2">Free</h3>
+          <div class="mb-6">
+            <span class="text-4xl font-bold">$0</span>
+            <span class="text-gray-400">/month</span>
+          </div>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Basic sound library</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Pomodoro timer</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Basic stats</span>
+            </li>
+          </ul>
+          <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+            Get Started
+          </button>
+        </div>
+        
+        <!-- Pro Plan (Highlighted) -->
+        <div class="bg-dark-section p-8 rounded-2xl border-2 border-accent relative scroll-reveal transform scale-105">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-accent text-white px-4 py-1 rounded-full text-sm font-semibold">
+            Popular
+          </div>
+          <h3 class="text-2xl font-semibold mb-2">Pro</h3>
+          <div class="mb-6">
+            <span class="text-4xl font-bold">$9</span>
+            <span class="text-gray-400">/month</span>
+          </div>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Full sound library</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Advanced timer settings</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Detailed analytics</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Custom playlists</span>
+            </li>
+          </ul>
+          <button class="w-full bg-accent hover:bg-accent-hover text-white font-semibold py-3 px-6 rounded-xl transition-colors glow-hover">
+            Start Free Trial
+          </button>
+        </div>
+        
+        <!-- Premium Plan -->
+        <div class="bg-dark-section p-8 rounded-2xl border border-gray-800 scroll-reveal">
+          <h3 class="text-2xl font-semibold mb-2">Premium</h3>
+          <div class="mb-6">
+            <span class="text-4xl font-bold">$19</span>
+            <span class="text-gray-400">/month</span>
+          </div>
+          <ul class="space-y-4 mb-8">
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Everything in Pro</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Live wallpapers</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Priority support</span>
+            </li>
+            <li class="flex items-start">
+              <svg class="w-5 h-5 text-accent mr-3 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-gray-300">Early access features</span>
+            </li>
+          </ul>
+          <button class="w-full bg-gray-800 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-xl transition-colors">
+            Get Started
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <!-- Footer -->
+  <footer id="contact" class="bg-dark-section border-t border-gray-800 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto">
+      <div class="grid md:grid-cols-4 gap-8 mb-8">
+        <!-- Brand -->
+        <div>
+          <h3 class="text-2xl font-semibold mb-4">
+            Calm<span class="text-accent">Cove</span>
+          </h3>
+          <p class="text-gray-400 text-sm">
+            Your zen corner for deep focus and productivity.
+          </p>
+        </div>
+        
+        <!-- Links -->
+        <div>
+          <h4 class="font-semibold mb-4">Product</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+            <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+            <li><a href="#demo" class="hover:text-white transition-colors">Demo</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Company</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+            <li><a href="#" class="hover:text-white transition-colors">Careers</a></li>
+          </ul>
+        </div>
+        
+        <div>
+          <h4 class="font-semibold mb-4">Legal</h4>
+          <ul class="space-y-2 text-sm text-gray-400">
+            <li><a href="/privacy.html" class="hover:text-white transition-colors">Privacy</a></li>
+            <li><a href="/terms.html" class="hover:text-white transition-colors">Terms</a></li>
+            <li><a href="#contact" class="hover:text-white transition-colors">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <!-- Social Media & Copyright -->
+      <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-400 text-sm mb-4 md:mb-0">
+          © 2024 CalmCove. All rights reserved.
+        </p>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-400 hover:text-accent transition-colors" aria-label="Twitter">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition-colors" aria-label="GitHub">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd"/>
+            </svg>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-accent transition-colors" aria-label="LinkedIn">
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- JavaScript for scroll animations and mobile menu -->
+  <script>
+    // Mobile menu toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+    });
+    
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start'
+          });
+          // Close mobile menu if open
+          mobileMenu.classList.add('hidden');
+        }
+      });
+    });
+    
+    // Intersection Observer for scroll animations
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+    
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('revealed');
+        }
+      });
+    }, observerOptions);
+    
+    // Observe all scroll-reveal elements
+    document.querySelectorAll('.scroll-reveal').forEach(el => {
+      observer.observe(el);
+    });
+    
+    // Navbar background on scroll
+    let lastScroll = 0;
+    const navbar = document.querySelector('nav');
+    
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+      if (currentScroll > 50) {
+        navbar.classList.add('bg-dark-bg');
+        navbar.classList.remove('bg-dark-bg/95');
+      } else {
+        navbar.classList.remove('bg-dark-bg');
+        navbar.classList.add('bg-dark-bg/95');
+      }
+      lastScroll = currentScroll;
+    });
+  </script>
+</body>
+</html>
+

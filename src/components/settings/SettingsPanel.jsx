@@ -1,6 +1,5 @@
 import React, { useRef } from 'react'
 import { useSettings } from '../../contexts/SettingsContext'
-import ThemeSwitcher from '../theme/ThemeSwitcher'
 import DraggablePanel from '../ui/DraggablePanel'
 import { IconClose } from '../icons/Icons'
 
@@ -14,7 +13,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
     <>
       {/* Panel - centered and draggable, no overlay */}
       <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in" style={{ pointerEvents: 'none' }}>
-        <DraggablePanel dragHandleRef={dragHandleRef}>
+        <DraggablePanel dragHandleRef={dragHandleRef} panelId="settings">
           <div className="panel-strong max-h-[85vh] flex flex-col overflow-hidden" style={{ pointerEvents: 'auto' }}>
           {/* Drag handle - header area */}
           <div 
@@ -24,7 +23,6 @@ export default function SettingsPanel({ isOpen, onClose }) {
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
               <h2 className="text-xl font-sans font-semibold text-text-primary tracking-tight">Settings</h2>
-              <ThemeSwitcher />
             </div>
             <button
               onClick={onClose}
@@ -134,6 +132,55 @@ export default function SettingsPanel({ isOpen, onClose }) {
                         </div>
                       </div>
                     </>
+                  )}
+                </div>
+              </section>
+
+              {/* Player Bar Section */}
+              <section>
+                <h3 className="text-xs font-semibold text-text-secondary mb-4 uppercase tracking-wider">
+                  Player Bar
+                </h3>
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between p-4 rounded-xl card">
+                    <div>
+                      <span className="text-sm font-medium text-text-primary block">Auto-Hide</span>
+                      <span className="text-xs text-text-tertiary">Automatically hide player bar after inactivity</span>
+                    </div>
+                    <label className="relative inline-flex items-center cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={settings.playerBar?.autoHide !== false}
+                        onChange={(e) => updateSettings({ 
+                          playerBar: { ...settings.playerBar, autoHide: e.target.checked }
+                        })}
+                        className="sr-only peer"
+                      />
+                      <div className="w-11 h-6 bg-surface-secondary peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-accent-primary/50 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-border after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-accent-primary"></div>
+                    </label>
+                  </div>
+                  
+                  {settings.playerBar?.autoHide !== false && (
+                    <div className="p-4 rounded-xl card">
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="text-sm font-medium text-text-primary">Hide After</span>
+                        <span className="text-xs text-text-tertiary tabular-nums">
+                          {Math.round((settings.playerBar?.hideTimeout || 600000) / 60000)} min
+                        </span>
+                      </div>
+                      <input
+                        type="range"
+                        min="1"
+                        max="30"
+                        value={Math.round((settings.playerBar?.hideTimeout || 600000) / 60000)}
+                        onChange={(e) => updateSettings({ 
+                          playerBar: { ...settings.playerBar, hideTimeout: parseInt(e.target.value) * 60000 }
+                        })}
+                        className="slider-base w-full"
+                        aria-label="Player bar hide timeout"
+                      />
+                      <p className="text-xs text-text-tertiary mt-2">Time before player bar auto-hides (1-30 minutes)</p>
+                    </div>
                   )}
                 </div>
               </section>

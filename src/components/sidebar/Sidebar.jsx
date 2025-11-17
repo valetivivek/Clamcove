@@ -44,16 +44,15 @@ export default function Sidebar({ activePanel, onAction, isFocusMode }) {
         className={`fixed right-6 z-40 hidden md:block transition-opacity duration-500 ${isIdle ? 'opacity-0' : 'opacity-100'}`}
         style={{ top: topPosition, transform: 'translateY(-50%)' }}
       >
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col gap-2.5">
             {sidebarActions.map((action) => {
               const Icon = iconMap[action.icon]
-              const isActive = activePanel === action.id || (action.id === 'focus' && isFocusMode)
 
               return (
                 <Tooltip key={action.id} label={action.label} position="left">
                   <button
                     onClick={() => onAction(action.id)}
-                    className={`btn-icon ${isActive ? 'btn-icon-active' : ''}`}
+                    className="btn-icon"
                     aria-label={action.label}
                   >
                     {Icon && <Icon />}
@@ -68,7 +67,7 @@ export default function Sidebar({ activePanel, onAction, isFocusMode }) {
       <div className="fixed right-4 bottom-20 z-40 md:hidden">
         <button
           onClick={() => setIsMobileOpen(!isMobileOpen)}
-          className="btn-icon bg-primaryAccent text-white hover:bg-primaryAccent-light"
+          className="btn-icon bg-accent-primary text-white hover:bg-accent-secondary"
           aria-label="Menu"
         >
           <IconMenu />
@@ -79,7 +78,6 @@ export default function Sidebar({ activePanel, onAction, isFocusMode }) {
           <div className="absolute bottom-14 right-0 panel flex flex-col gap-2 p-2 animate-slide-up">
             {sidebarActions.map((action) => {
               const Icon = iconMap[action.icon]
-              const isActive = activePanel === action.id || (action.id === 'focus' && isFocusMode)
 
               return (
                 <button
@@ -88,7 +86,7 @@ export default function Sidebar({ activePanel, onAction, isFocusMode }) {
                     onAction(action.id)
                     setIsMobileOpen(false)
                   }}
-                  className={`btn-icon ${isActive ? 'btn-icon-active' : ''}`}
+                  className="btn-icon"
                   aria-label={action.label}
                 >
                   {Icon && <Icon />}

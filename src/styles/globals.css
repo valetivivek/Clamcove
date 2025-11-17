@@ -32,12 +32,12 @@
     @apply h-full w-full;
   }
   
-  /* Cool gradient overlay for atmosphere - subtle */
+  /* Subtle gradient overlay - lofizen style */
   body::before {
     content: '';
     position: fixed;
     inset: 0;
-    background: radial-gradient(ellipse at center, rgba(100, 150, 200, 0.03) 0%, transparent 70%);
+    background: radial-gradient(ellipse at center, rgba(34, 197, 94, 0.03) 0%, transparent 70%);
     pointer-events: none;
     z-index: 5;
   }
@@ -54,21 +54,21 @@
 }
 
 @layer components {
-  /* Panel base - solid colors, no glassmorphism */
+  /* Panel base - lofizen glassmorphism */
   .panel {
-    @apply bg-surface-tertiary;
-    @apply border border-border;
-    @apply rounded-2xl;
+    @apply bg-glass-soft backdrop-blur-md;
+    @apply border border-glass-border;
+    @apply rounded-xl;
     @apply shadow-medium;
-    @apply transition-all duration-300;
+    @apply transition-all duration-200;
   }
   
   .panel-strong {
-    @apply bg-surface-tertiary;
-    @apply border border-border;
-    @apply rounded-3xl;
+    @apply bg-glass-medium backdrop-blur-lg;
+    @apply border border-glass-border;
+    @apply rounded-2xl;
     @apply shadow-large;
-    @apply transition-all duration-300;
+    @apply transition-all duration-200;
   }
 
   /* Card - elevated content */
@@ -91,23 +91,17 @@
     display: none;
   }
   
-  /* Button base - zen aesthetic, solid colors */
+  /* Button base - flat minimal style */
   .btn-icon {
-    @apply w-12 h-12 rounded-xl;
+    @apply w-9 h-9 rounded-lg;
     @apply flex items-center justify-center;
-    @apply bg-surface-secondary border border-border;
+    @apply bg-glass-soft backdrop-blur-sm border border-glass-border;
     @apply text-text-secondary;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-surface-tertiary hover:text-text-primary hover:scale-105 hover:border-accent-primary/30;
+    @apply hover:bg-glass-medium hover:text-text-primary;
     @apply active:scale-95;
-    @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
+    @apply focus:outline-none;
     @apply leading-none;
-  }
-  
-  .btn-icon-active {
-    @apply bg-accent-primary text-white;
-    @apply border-accent-primary/60;
-    @apply scale-105;
   }
   
   .btn-secondary {
@@ -123,7 +117,7 @@
     @apply bg-accent-primary text-white;
     @apply border border-accent-primary/60;
     @apply transition-all duration-200 ease-out;
-    @apply hover:bg-accent-primary/90 hover:scale-105;
+    @apply hover:bg-accent-secondary hover:scale-105;
     @apply active:scale-95;
     @apply focus:outline-none focus:ring-2 focus:ring-accent-primary/50 focus:ring-offset-2 focus:ring-offset-transparent;
     @apply font-medium;
