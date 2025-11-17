@@ -18,8 +18,7 @@ import { useSettings } from '../../contexts/SettingsContext'
 
 export default function MainLayout() {
   const [activePanel, setActivePanel] = useState(null)
-  const [currentBackground, setCurrentBackground] = useState('autumn-bedroom')
-  const [isFocusMode, setIsFocusMode] = useState(false)
+  const [currentBackground, setCurrentBackground] = useState('temple-gate-autumn')
   const [timerState, setTimerState] = useState(null) // { minutes, seconds, mode }
   const { settings } = useSettings()
   const isIdle = useIdle(settings.idleTimeout || 300000)
@@ -92,16 +91,6 @@ export default function MainLayout() {
   }, [settings.playerBar])
 
   const handleSidebarAction = (action) => {
-    if (action === 'focus') {
-      setIsFocusMode(!isFocusMode)
-      if (!isFocusMode) {
-        document.documentElement.requestFullscreen?.()
-      } else {
-        document.exitFullscreen?.()
-      }
-      return
-    }
-    
     if (activePanel === action) {
       setActivePanel(null)
     } else {
@@ -147,7 +136,7 @@ export default function MainLayout() {
       )}
 
       {/* Right Sidebar - Zen style */}
-      <Sidebar activePanel={activePanel} onAction={handleSidebarAction} isFocusMode={isFocusMode} />
+      <Sidebar activePanel={activePanel} onAction={handleSidebarAction} />
 
       {/* Bottom Player Bar - Full width */}
       <div 

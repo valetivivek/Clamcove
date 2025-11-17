@@ -11,18 +11,18 @@ export default function SettingsPanel({ isOpen, onClose }) {
 
   return (
     <>
-      {/* Panel - centered and draggable, no overlay */}
-      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-96 animate-scale-in" style={{ pointerEvents: 'none' }}>
+      {/* Panel - centered and draggable, square shape */}
+      <div className="fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-50 w-[500px] h-[500px] animate-scale-in" style={{ pointerEvents: 'none' }}>
         <DraggablePanel dragHandleRef={dragHandleRef} panelId="settings">
-          <div className="panel-strong max-h-[85vh] flex flex-col overflow-hidden" style={{ pointerEvents: 'auto' }}>
+          <div className="panel-strong w-full h-full flex flex-col overflow-hidden" style={{ pointerEvents: 'auto' }}>
           {/* Drag handle - header area */}
           <div 
             ref={dragHandleRef}
-            className="flex items-center justify-between px-6 pt-6 pb-4 border-b border-border/50"
+            className="flex items-center justify-between px-5 pt-5 pb-3 border-b border-border/50 flex-shrink-0"
           >
             <div className="flex items-center gap-3">
               <div className="w-1.5 h-1.5 rounded-full bg-accent-primary/60"></div>
-              <h2 className="text-xl font-sans font-semibold text-text-primary tracking-tight">Settings</h2>
+              <h2 className="text-lg font-sans font-semibold text-text-primary tracking-tight">Settings</h2>
             </div>
             <button
               onClick={onClose}
@@ -33,14 +33,14 @@ export default function SettingsPanel({ isOpen, onClose }) {
             </button>
           </div>
 
-          <div className="p-6 overflow-y-auto no-scrollbar flex-1">
-            <div className="space-y-8">
+          <div className="p-5 overflow-y-auto no-scrollbar flex-1">
+            <div className="space-y-6">
               {/* Sidebar Position Section */}
               <section>
-                <h3 className="text-xs font-semibold text-text-secondary mb-4 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-text-secondary mb-3 uppercase tracking-wider">
                   Layout
                 </h3>
-                <div className="p-4 rounded-xl card">
+                <div className="p-3 rounded-xl card">
                   <div className="flex items-center justify-between mb-2">
                     <span className="text-sm font-medium text-text-primary">Sidebar Position</span>
                     <span className="text-xs text-text-tertiary tabular-nums">
@@ -62,11 +62,11 @@ export default function SettingsPanel({ isOpen, onClose }) {
 
               {/* Clock Customization Section */}
               <section>
-                <h3 className="text-xs font-semibold text-text-secondary mb-4 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-text-secondary mb-3 uppercase tracking-wider">
                   Center Clock
                 </h3>
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between p-4 rounded-xl card">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-xl card">
                     <div>
                       <span className="text-sm font-medium text-text-primary block">Show Clock</span>
                       <span className="text-xs text-text-tertiary">Display center clock widget</span>
@@ -86,7 +86,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
                   
                   {settings.clock.enabled && (
                     <>
-                      <div className="p-4 rounded-xl card">
+                      <div className="p-3 rounded-xl card">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium text-text-primary">Clock Size</span>
                         </div>
@@ -97,7 +97,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
                               onClick={() => updateSettings({ 
                                 clock: { ...settings.clock, size }
                               })}
-                              className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex-1 flex items-center justify-center ${
+                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex-1 flex items-center justify-center ${
                                 settings.clock.size === size
                                   ? 'bg-accent-primary text-white'
                                   : 'bg-surface-secondary text-text-secondary hover:bg-surface-tertiary hover:text-text-primary'
@@ -109,7 +109,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
                         </div>
                       </div>
 
-                      <div className="p-4 rounded-xl card">
+                      <div className="p-3 rounded-xl card">
                         <div className="flex items-center justify-between mb-2">
                           <span className="text-sm font-medium text-text-primary">Clock Style</span>
                         </div>
@@ -120,7 +120,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
                               onClick={() => updateSettings({ 
                                 clock: { ...settings.clock, style }
                               })}
-                              className={`px-4 py-2 rounded-lg text-xs font-medium transition-all duration-200 flex-1 flex items-center justify-center ${
+                              className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-200 flex-1 flex items-center justify-center ${
                                 settings.clock.style === style
                                   ? 'bg-accent-primary text-white'
                                   : 'bg-surface-secondary text-text-secondary hover:bg-surface-tertiary hover:text-text-primary'
@@ -138,11 +138,11 @@ export default function SettingsPanel({ isOpen, onClose }) {
 
               {/* Player Bar Section */}
               <section>
-                <h3 className="text-xs font-semibold text-text-secondary mb-4 uppercase tracking-wider">
+                <h3 className="text-xs font-semibold text-text-secondary mb-3 uppercase tracking-wider">
                   Player Bar
                 </h3>
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between p-4 rounded-xl card">
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 rounded-xl card">
                     <div>
                       <span className="text-sm font-medium text-text-primary block">Auto-Hide</span>
                       <span className="text-xs text-text-tertiary">Automatically hide player bar after inactivity</span>
@@ -161,7 +161,7 @@ export default function SettingsPanel({ isOpen, onClose }) {
                   </div>
                   
                   {settings.playerBar?.autoHide !== false && (
-                    <div className="p-4 rounded-xl card">
+                    <div className="p-3 rounded-xl card">
                       <div className="flex items-center justify-between mb-2">
                         <span className="text-sm font-medium text-text-primary">Hide After</span>
                         <span className="text-xs text-text-tertiary tabular-nums">

@@ -1,25 +1,39 @@
-import React from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { backgrounds } from '../../config/backgrounds.js'
 
 export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
-  const getImageSrc = (bg) => {
-    if (bg.type === 'video') {
-      return bg.poster || bg.src
-    }
-    if (window.innerWidth >= 1280) return bg.srcMedium || bg.srcLarge
-    return bg.srcSmall || bg.srcMedium
-  }
+  const [hoveredId, setHoveredId] = useState(null)
+  const videoRefs = useRef({})
+
+  // Handle video preview on hover
+  useEffect(() => {
+    Object.entries(videoRefs.current).forEach(([id, video]) => {
+      if (video) {
+        if (hoveredId === id || currentBackgroundId === id) {
+          video.play().catch(() => {
+            // Autoplay failed, that's okay
+          })
+        } else {
+          video.pause()
+          video.currentTime = 0
+        }
+      }
+    })
+  }, [hoveredId, currentBackgroundId])
 
   return (
     <div className="grid grid-cols-2 gap-3">
       {backgrounds.map((bg) => {
         const isVideo = bg.type === 'video'
         const isSelected = currentBackgroundId === bg.id
+        const isHovered = hoveredId === bg.id
         
         return (
           <button
             key={bg.id}
             onClick={() => onSelect(bg.id)}
+            onMouseEnter={() => setHoveredId(bg.id)}
+            onMouseLeave={() => setHoveredId(null)}
             className={`relative aspect-video rounded-xl overflow-hidden border-2 transition-all duration-300 group ${
               isSelected
                 ? 'border-accent-primary ring-2 ring-accent-primary/50 scale-105'
@@ -27,13 +41,25 @@ export default function BackgroundSelector({ currentBackgroundId, onSelect }) {
             }`}
             aria-label={`Select ${bg.name} background`}
           >
-            {/* Thumbnail/Poster */}
-            <img
-              src={getImageSrc(bg)}
-              alt={bg.name}
-              className="w-full h-full object-cover"
-              loading="lazy"
-            />
+            {/* Video Preview */}
+            {isVideo ? (
+              <video
+                ref={(el) => {
+                  if (el) videoRefs.current[bg.id] = el
+                }}
+                src={bg.src}
+                className="w-full h-full object-cover"
+                muted
+                loop
+                playsInline
+                preload="metadata"
+                style={{
+                  opacity: isHovered || isSelected ? 1 : 0.7,
+                }}
+              />
+            ) : (
+              <div className="w-full h-full bg-gradient-to-br from-surface-secondary to-surface-tertiary" />
+            )}
             
             {/* Video indicator badge */}
             {isVideo && (

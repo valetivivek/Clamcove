@@ -4,7 +4,6 @@ import { useIdle } from '../../hooks/useIdle'
 import { useSettings } from '../../contexts/SettingsContext'
 import {
   IconImage,
-  IconFocus,
   IconTimer,
   IconAlarm,
   IconChecklist,
@@ -14,7 +13,6 @@ import {
 
 const sidebarActions = [
   { id: 'background', icon: 'image', label: 'Background' },
-  { id: 'focus', icon: 'alarm', label: 'Focus Mode' },
   { id: 'pomodoro', icon: 'timer', label: 'Pomodoro' },
   { id: 'tasks', icon: 'checklist', label: 'Tasks & Notes' },
   { id: 'settings', icon: 'settings', label: 'Settings' },
@@ -26,10 +24,9 @@ const iconMap = {
   timer: IconTimer,
   alarm: IconAlarm,
   checklist: IconChecklist,
-  focus: IconAlarm, // Use alarm icon for focus
 }
 
-export default function Sidebar({ activePanel, onAction, isFocusMode }) {
+export default function Sidebar({ activePanel, onAction }) {
   const [isMobileOpen, setIsMobileOpen] = useState(false)
   const isIdle = useIdle(300000)
   const { settings } = useSettings()

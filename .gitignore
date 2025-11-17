@@ -29,12 +29,13 @@ dist-ssr
 .env.production.local
 .env.development.local
 
-# Large video assets (wallpapers)
+# Large video assets and images (wallpapers)
 # These files are too large for git. Add them manually after cloning.
-public/assets/images/backgrounds/*.mp4
-public/assets/videos/backgrounds/*.mp4
+public/assets/images/backgrounds/
+public/assets/videos/backgrounds/
+public/assets/images/
 
-# Image files
+# Image files (all formats)
 *.jpg
 *.jpeg
 *.png
