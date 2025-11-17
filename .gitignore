@@ -8,8 +8,8 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
-dist
-dist-ssr
+dist/
+dist-ssr/
 *.local
 
 # Editor directories and files
@@ -34,6 +34,16 @@ dist-ssr
 public/assets/images/backgrounds/
 public/assets/videos/backgrounds/
 public/assets/images/
+
+# Video files (all formats - too large for git)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.flv
+*.wmv
+*.m4v
 
 # Image files (all formats)
 *.jpg
